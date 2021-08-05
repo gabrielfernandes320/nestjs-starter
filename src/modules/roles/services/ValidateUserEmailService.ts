@@ -5,11 +5,13 @@ import IUsersRepository from '../repositories/IUsersRepository';
 @Injectable()
 export default class ValidateUserEmailService {
     public constructor(
-        @Inject('UsersRepository')
-        private usersRepository: IUsersRepository,
-    ) {}
+		@Inject('UsersRepository')
+		private usersRepository: IUsersRepository,
+    ) { }
 
     public async execute(email: string): Promise<User> {
-        return await this.usersRepository.findByEmail(email);
+        const user = await this.usersRepository.findByEmail(email);
+
+        return user;
     }
 }

@@ -27,33 +27,30 @@ export class UsersRepository implements IUsersRepository {
     public async update(id: number, user: UpdateUserDTO): Promise<User> {
         const userToUpdate = plainToClass(User, user);
 
-        userToUpdate.password = await hashPassword(userToUpdate.password);
+        await this.usersRepository.update(userToUpdate.id, userToUpdate);
 
-        await this.usersRepository.update(id, userToUpdate);
-
-        const updatedUser = await this.usersRepository.findOne(id);
+        const updatedUser = await this.usersRepository.findOne(userToUpdate.id);
 
         if (updatedUser) {
             return updatedUser;
         }
 
-        throw new UserNotFoundException(id);
+        throw new UserNotFoundException(userToUpdate.id);
     }
 
-    public async findAll(params: any): Promise<any> {
-        return await this.usersRepository.find();
-    }
+    public async findAll(params: any): Promise<any> {}
 
     public async findById(id: number): Promise<User> {
         const user = await this.usersRepository.findOne(id, {
             where: { deletedAt: null },
+            relations: ['roles'],
         });
 
         if (user) {
             return user;
         }
 
-        throw new UserNotFoundException(id);
+        throw new UserNotFoundException(user.id);
     }
 
     public async remove(id: number) {

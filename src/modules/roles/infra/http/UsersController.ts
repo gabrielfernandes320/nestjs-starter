@@ -10,20 +10,10 @@ import {
 import CreateUserDTO from '../../dtos/CreateUserDTO';
 import UpdateUserDTO from '../../dtos/UpdateUserDTO';
 import CreateUserService from '../../services/CreateUserService';
-import DeleteUserService from '../../services/DeleteUserService';
-import ListUserService from '../../services/ListUserService';
-import ShowUserService from '../../services/ShowUserService';
-import UpdateUserService from '../../services/UpdateUserService';
 
 @Controller('users')
 export class UsersController {
-    public constructor(
-        private createUserService: CreateUserService,
-        private deleteUserService: DeleteUserService,
-        private listUserService: ListUserService,
-        private showUserService: ShowUserService,
-        private updateUserService: UpdateUserService,
-    ) {}
+    public constructor(private createUserService: CreateUserService) {}
 
     @Post()
     public create(@Body() createUserDto: CreateUserDTO) {
@@ -32,12 +22,12 @@ export class UsersController {
 
     @Get()
     public findAll() {
-        return this.listUserService.execute({});
+        // return this.usersService.findAll();
     }
 
     @Get(':id')
     public findOne(@Param('id') id: number) {
-        return this.showUserService.execute(id);
+        //return this.usersService.findOne(+id);
     }
 
     @Patch(':id')
@@ -45,11 +35,11 @@ export class UsersController {
         @Param('id') id: number,
         @Body() updateUserDto: UpdateUserDTO,
     ) {
-        return this.updateUserService.execute(id, updateUserDto);
+        //return this.usersService.update(+id, updateUserDto);
     }
 
     @Delete(':id')
     public remove(@Param('id') id: number) {
-        return this.deleteUserService.execute(id);
+        // return this.usersService.remove(+id);
     }
 }

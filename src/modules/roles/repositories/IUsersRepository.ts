@@ -11,7 +11,7 @@ export default interface IUsersRepository {
 
     create(user: CreateUserDto): Promise<User>;
 
-    update(id: number, user: UpdateUserDTO): Promise<User>;
+    update(user: UpdateUserDTO): Promise<User>;
 
     findByEmail(email: string): Promise<User>;
 }

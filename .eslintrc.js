@@ -12,6 +12,7 @@ module.exports = {
     },
     plugins: ['@typescript-eslint'],
     rules: {
+        indent: 'off',
         '@typescript-eslint/consistent-type-definitions': 'error',
         '@typescript-eslint/dot-notation': 'off',
         '@typescript-eslint/explicit-member-accessibility': [
