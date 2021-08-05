@@ -8,7 +8,9 @@ export default class CreateUserDTO {
     @IsEmail()
     public email: string;
 
-    //public roleId: number;
+    @IsNotEmpty()
+    public roleId: number;
+
     @IsNotEmpty()
     public password: string;
 }

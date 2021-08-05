@@ -1,4 +1,4 @@
-import { Role } from 'src/modules/users/infra/typeorm/entities/RoleEntity';
+import { Role } from 'src/modules/roles/infra/typeorm/entities/RoleEntity';
 import {
     BeforeInsert,
     BeforeUpdate,
@@ -9,6 +9,7 @@ import {
     Index,
     JoinTable,
     ManyToMany,
+    ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
@@ -45,14 +46,12 @@ export class User {
     @DeleteDateColumn({ name: 'deleted_at', nullable: true })
     public deletedAt?: Date;
 
+    @Column({ name: 'role_id' })
+    public roleId: number;
+
     @ApiProperty()
-    @ManyToMany(() => Role, (role) => role.name)
-    @JoinTable({
-        name: 'user_roles',
-        joinColumns: [{ name: 'user_id' }],
-        inverseJoinColumns: [{ name: 'role_id' }],
-    })
-    public roles: Role[];
+    @ManyToOne(() => Role, (role) => role.users)
+    public role: Role;
 
     @BeforeInsert()
     public setCreated() {

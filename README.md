@@ -76,11 +76,11 @@ Nest is [MIT licensed](LICENSE).
 
 ```bash
 # run migration
-$ npm run typeorm -- migration:run
+$ yarn typeorm -- migration:run
 
 # create migration
-$ npm run typeorm -- migration:create -n <migration_name>
+$ yarn typeorm -- migration:create -n <migration_name>
 
 # revert migration
-$ npm run typeorm -- migration:revert
+$ yarn typeorm -- migration:revert
 ```

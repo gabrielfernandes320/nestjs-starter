@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Role } from '../../users/infra/typeorm/entities/RoleEntity';
-import IRolesRepository from '../../users/repositories/IRolesRepository';
+import { Role } from '../../roles/infra/typeorm/entities/RoleEntity';
+import IRolesRepository from '../../roles/repositories/IRolesRepository';
 
 @Injectable()
 export default class ListRoleService {

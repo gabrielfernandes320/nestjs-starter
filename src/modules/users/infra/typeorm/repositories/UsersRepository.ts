@@ -8,6 +8,7 @@ import CreateUserDTO from 'src/modules/users/dtos/CreateUserDTO';
 import UpdateUserDTO from 'src/modules/users/dtos/UpdateUserDTO';
 import { plainToClass } from 'class-transformer';
 import UserNotFoundException from 'src/modules/users/exceptions/UserNotFoundException';
+import ListUserDTO from 'src/modules/users/dtos/ListUserDTO';
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
@@ -40,8 +41,24 @@ export class UsersRepository implements IUsersRepository {
         throw new UserNotFoundException(id);
     }
 
-    public async findAll(params: any): Promise<any> {
-        return await this.usersRepository.find();
+    public async findAll({
+        page,
+        perPage,
+        search,
+        order,
+    }: ListUserDTO): Promise<any> {
+        const [result, total] = await this.usersRepository.findAndCount({
+            where: { name: ILike(`%${search ?? ''}%`) },
+            order: { id: order ?? 'DESC' },
+            take: perPage,
+            skip: perPage * (page - 1),
+        });
+
+        return {
+            data: result,
+            total: total,
+            pages: Math.round(total / perPage),
+        };
     }
 
     public async findById(id: number): Promise<User> {

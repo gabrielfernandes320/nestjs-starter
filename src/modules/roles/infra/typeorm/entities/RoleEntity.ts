@@ -1,9 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from 'src/modules/users/infra/typeorm/entities/UserEntity';
 import {
     BeforeInsert,
     BeforeUpdate,
     Column,
     Entity,
+    OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -20,6 +22,9 @@ export class Role {
     @ApiProperty()
     @Column()
     public reference: string;
+
+    @OneToMany(() => User, (user: User) => user.role)
+    public users: User[];
 
     @ApiProperty()
     @Column({ name: 'created_at' })

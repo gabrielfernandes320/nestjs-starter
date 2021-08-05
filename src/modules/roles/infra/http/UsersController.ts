@@ -9,16 +9,10 @@ import {
 } from '@nestjs/common';
 import CreateUserDTO from '../../dtos/CreateUserDTO';
 import UpdateUserDTO from '../../dtos/UpdateUserDTO';
-import CreateUserService from '../../services/CreateUserService';
 
 @Controller('users')
 export class UsersController {
-    public constructor(private createUserService: CreateUserService) {}
-
-    @Post()
-    public create(@Body() createUserDto: CreateUserDTO) {
-        return this.createUserService.execute(createUserDto);
-    }
+    public constructor() {}
 
     @Get()
     public findAll() {

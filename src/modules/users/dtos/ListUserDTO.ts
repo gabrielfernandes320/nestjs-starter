@@ -1,3 +1,3 @@
-export default class ListUserDTO {
-    public email?: string;
-}
+import ListParamsDTO from 'src/dtos/ListParamsDTO';
+
+export default class ListUserDTO extends ListParamsDTO {}
