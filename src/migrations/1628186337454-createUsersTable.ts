@@ -11,7 +11,7 @@ export class createusersTable1628186337454 implements MigrationInterface {
 
         await queryRunner.createTable(
             new Table({
-                name: TABLE_NAME,
+                name: 'users',
                 columns: [
                     {
                         name: 'id',
@@ -33,7 +33,6 @@ export class createusersTable1628186337454 implements MigrationInterface {
                         name: 'password',
                         type: 'varchar(200)',
                     },
-                    { name: 'role_id', type: 'int' },
                     {
                         name: 'created_at',
                         type: 'timestamp',
@@ -48,15 +47,6 @@ export class createusersTable1628186337454 implements MigrationInterface {
                         isNullable: true,
                     },
                 ],
-            }),
-        );
-
-        await queryRunner.createForeignKey(
-            TABLE_NAME,
-            new TableForeignKey({
-                columnNames: ['role_id'],
-                referencedColumnNames: ['id'],
-                referencedTableName: 'roles',
             }),
         );
     }

@@ -9,7 +9,7 @@ export default class CreateUserDTO {
     public email: string;
 
     @IsNotEmpty()
-    public roleId: number;
+    public roles: { id: string }[];
 
     @IsNotEmpty()
     public password: string;

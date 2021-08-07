@@ -23,8 +23,8 @@ export class Role {
     @Column()
     public reference: string;
 
-    @OneToMany(() => User, (user: User) => user.role)
-    public users: User[];
+    // @OneToMany(() => User, (user: User) => user.role)
+    // public users: User[];
 
     @ApiProperty()
     @Column({ name: 'created_at' })

@@ -22,6 +22,8 @@ export class UsersRepository implements IUsersRepository {
 
         newUser.password = await hashPassword(newUser.password);
 
+        console.log(newUser);
+
         return await this.usersRepository.save(newUser);
     }
 
@@ -52,6 +54,7 @@ export class UsersRepository implements IUsersRepository {
             order: { id: order ?? 'DESC' },
             take: perPage,
             skip: perPage * (page - 1),
+            relations: ['roles'],
         });
 
         return {

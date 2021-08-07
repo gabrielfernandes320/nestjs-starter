@@ -46,12 +46,14 @@ export class User {
     @DeleteDateColumn({ name: 'deleted_at', nullable: true })
     public deletedAt?: Date;
 
-    @Column({ name: 'role_id' })
-    public roleId: number;
-
     @ApiProperty()
-    @ManyToOne(() => Role, (role) => role.users)
-    public role: Role;
+    @ManyToMany(() => Role, (role) => role.name)
+    @JoinTable({
+        name: 'user_roles',
+        joinColumns: [{ name: 'user_id' }],
+        inverseJoinColumns: [{ name: 'role_id' }],
+    })
+    public roles: Role[];
 
     @BeforeInsert()
     public setCreated() {
