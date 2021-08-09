@@ -22,43 +22,40 @@ export class UsersRepository implements IUsersRepository {
 
         newUser.password = await hashPassword(newUser.password);
 
-        console.log(newUser);
-
         return await this.usersRepository.save(newUser);
     }
 
     public async update(id: number, user: UpdateUserDTO): Promise<User> {
         const userToUpdate = plainToClass(User, user);
 
+        console.log(userToUpdate);
+
         userToUpdate.password = await hashPassword(userToUpdate.password);
 
-        await this.usersRepository.update(id, userToUpdate);
+        //await this.usersRepository.update(id, userToUpdate);
 
-        const updatedUser = await this.usersRepository.findOne(id);
+        //const updatedUser = await this.usersRepository.findOne(id);
 
-        if (updatedUser) {
-            return updatedUser;
-        }
+        // if (updatedUser) {
+        //     return updatedUser;
+        // }
 
         throw new UserNotFoundException(id);
     }
 
-    public async findAll({
-        page,
-        perPage,
-        search,
-        order,
-    }: ListUserDTO): Promise<any> {
+    public async findAll(params: ListUserDTO): Promise<any> {
+        const { page, perPage, search, order } = params;
+
         const [result, total] = await this.usersRepository.findAndCount({
             where: { name: ILike(`%${search ?? ''}%`) },
-            order: { id: order ?? 'DESC' },
+            order: { id: order },
             take: perPage,
             skip: perPage * (page - 1),
             relations: ['roles'],
         });
 
         return {
-            data: result,
+            value: result,
             total: total,
             pages: Math.round(total / perPage),
         };

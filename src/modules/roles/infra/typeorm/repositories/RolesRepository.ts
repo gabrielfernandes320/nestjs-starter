@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import ListRolesDTO from 'src/modules/roles/dtos/ListRolesDTO';
 import SaveRoleDTO from 'src/modules/roles/dtos/SaveRoleDTO';
 import IRolesRepository from 'src/modules/roles/repositories/IRolesRepository';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Role } from '../entities/RoleEntity';
 
 @Injectable()
@@ -12,12 +13,21 @@ export class RolesRepository implements IRolesRepository {
         private rolesRepository: Repository<Role>,
     ) {}
 
-    public findAll(): Promise<Role[]> {
-        return this.rolesRepository
-            .createQueryBuilder('roles')
-            .orderBy('roles.name', 'ASC')
-            .select(['id AS value', 'name AS label'])
-            .getRawMany();
+    public async findAll(params: ListRolesDTO): Promise<any> {
+        const { page, perPage, search, order } = params;
+
+        const [result, total] = await this.rolesRepository.findAndCount({
+            where: { name: ILike(`%${search ?? ''}%`) },
+            order: { id: order },
+            take: perPage,
+            skip: perPage * (page - 1),
+        });
+
+        return {
+            value: result,
+            total: total,
+            pages: Math.round(total / perPage),
+        };
     }
 
     public findById(id: number): Promise<Role> {

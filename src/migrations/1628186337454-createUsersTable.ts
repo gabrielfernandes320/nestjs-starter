@@ -34,6 +34,10 @@ export class createusersTable1628186337454 implements MigrationInterface {
                         type: 'varchar(200)',
                     },
                     {
+                        name: 'enabled',
+                        type: 'boolean',
+                    },
+                    {
                         name: 'created_at',
                         type: 'timestamp',
                     },

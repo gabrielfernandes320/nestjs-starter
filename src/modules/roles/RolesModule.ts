@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersController } from './infra/http/UsersController';
+import { RolesController } from './infra/http/RolesController';
 import ShowRoleService from './services/ShowRoleService';
-import ListRoleService from './services/ListRoleService';
+import ListRoleService from './services/ListRolesService';
 import DeleteRoleService from './services/DeleteRoleService';
 import SaveRoleService from './services/SaveRoleService';
 import { Role } from './infra/typeorm/entities/RoleEntity';
@@ -19,7 +19,7 @@ import providers from './providers';
         ],
         ...providers,
     ],
-    controllers: [UsersController],
+    controllers: [RolesController],
     exports: providers,
 })
 export class RolesModule {}

@@ -6,17 +6,20 @@ import {
     Param,
     Patch,
     Post,
+    Query,
 } from '@nestjs/common';
 import CreateUserDTO from '../../dtos/CreateUserDTO';
+import ListRolesDTO from '../../dtos/ListRolesDTO';
 import UpdateUserDTO from '../../dtos/UpdateUserDTO';
+import ListRoleService from '../../services/ListRolesService';
 
-@Controller('users')
-export class UsersController {
-    public constructor() {}
+@Controller('roles')
+export class RolesController {
+    public constructor(private listRoleService: ListRoleService) {}
 
     @Get()
-    public findAll() {
-        // return this.usersService.findAll();
+    public findAll(@Query() query: ListRolesDTO) {
+        return this.listRoleService.execute(query);
     }
 
     @Get(':id')

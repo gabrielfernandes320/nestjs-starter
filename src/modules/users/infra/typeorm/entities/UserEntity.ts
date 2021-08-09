@@ -35,6 +35,10 @@ export class User {
     public password: string;
 
     @ApiProperty()
+    @Column()
+    public enabled: boolean;
+
+    @ApiProperty()
     @CreateDateColumn({ name: 'created_at' })
     public createdAt: Date;
 

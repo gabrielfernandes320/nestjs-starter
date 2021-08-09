@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from '../database.config';
+import { RolesModule } from './modules/roles/RolesModule';
 import { UsersModule } from './modules/users/UsersModule';
 
 @Module({
@@ -19,6 +20,7 @@ import { UsersModule } from './modules/users/UsersModule';
             },
         }),
         UsersModule,
+        RolesModule,
     ],
 
     controllers: [],

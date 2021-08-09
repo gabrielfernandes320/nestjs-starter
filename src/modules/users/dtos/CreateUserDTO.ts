@@ -13,4 +13,7 @@ export default class CreateUserDTO {
 
     @IsNotEmpty()
     public password: string;
+
+    @IsNotEmpty()
+    public enabled: boolean;
 }

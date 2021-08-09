@@ -1,8 +1,9 @@
+import ListRolesDTO from '../dtos/ListRolesDTO';
 import SaveRoleDTO from '../dtos/SaveRoleDTO';
 import { Role } from '../infra/typeorm/entities/RoleEntity';
 
 export default interface IRolesRepository {
-    findAll(): Promise<Role[]>;
+    findAll(params: ListRolesDTO): Promise<Role[]>;
 
     findById(id: number): Promise<Role>;
 
