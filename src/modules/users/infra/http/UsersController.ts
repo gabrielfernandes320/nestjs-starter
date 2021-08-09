@@ -8,6 +8,7 @@ import {
     Post,
     Query,
 } from '@nestjs/common';
+import { TransformClassToPlain } from 'class-transformer';
 import CreateUserDTO from '../../dtos/CreateUserDTO';
 import ListUserDTO from '../../dtos/ListUserDTO';
 import UpdateUserDTO from '../../dtos/UpdateUserDTO';
@@ -38,6 +39,7 @@ export class UsersController {
     }
 
     @Get(':id')
+    @TransformClassToPlain()
     public findOne(@Param('id') id: number) {
         return this.showUserService.execute(id);
     }

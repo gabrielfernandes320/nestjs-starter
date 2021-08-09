@@ -1,3 +1,4 @@
+import hashPassword from 'src/shared/utils/hashPassword';
 import { Role } from 'src/modules/roles/infra/typeorm/entities/RoleEntity';
 import {
     BeforeInsert,
@@ -14,6 +15,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
@@ -31,6 +33,7 @@ export class User {
     public email: string;
 
     @ApiProperty()
+    @Exclude({ toPlainOnly: true })
     @Column()
     public password: string;
 
@@ -60,13 +63,14 @@ export class User {
     public roles: Role[];
 
     @BeforeInsert()
-    public setCreated() {
+    public async setCreated() {
         this.createdAt = new Date();
     }
 
     @BeforeUpdate()
     @BeforeInsert()
-    public setUpdatedAt() {
+    public async setUpdatedAt() {
+        this.password = await hashPassword(this.password);
         this.updatedAt = new Date();
     }
 }

@@ -20,25 +20,19 @@ export class UsersRepository implements IUsersRepository {
     public async create(user: CreateUserDTO): Promise<User> {
         const newUser = this.usersRepository.create(plainToClass(User, user));
 
-        newUser.password = await hashPassword(newUser.password);
-
         return await this.usersRepository.save(newUser);
     }
 
     public async update(id: number, user: UpdateUserDTO): Promise<User> {
-        const userToUpdate = plainToClass(User, user);
+        let userToUpdate = plainToClass(User, user);
 
-        console.log(userToUpdate);
+        userToUpdate.id = id;
 
-        userToUpdate.password = await hashPassword(userToUpdate.password);
+        const updatedUser = await this.usersRepository.save(userToUpdate);
 
-        //await this.usersRepository.update(id, userToUpdate);
-
-        //const updatedUser = await this.usersRepository.findOne(id);
-
-        // if (updatedUser) {
-        //     return updatedUser;
-        // }
+        if (updatedUser) {
+            return updatedUser;
+        }
 
         throw new UserNotFoundException(id);
     }
@@ -62,9 +56,7 @@ export class UsersRepository implements IUsersRepository {
     }
 
     public async findById(id: number): Promise<User> {
-        const user = await this.usersRepository.findOne(id, {
-            where: { deletedAt: null },
-        });
+        const user = await this.usersRepository.findOne(id);
 
         if (user) {
             return user;
@@ -74,7 +66,7 @@ export class UsersRepository implements IUsersRepository {
     }
 
     public async remove(id: number) {
-        const deleted = await this.usersRepository.delete(id);
+        const deleted = await this.usersRepository.softDelete(id);
 
         if (!deleted.affected) {
             throw new UserNotFoundException(id);
