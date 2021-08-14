@@ -56,7 +56,9 @@ export class UsersRepository implements IUsersRepository {
     }
 
     public async findById(id: number): Promise<User> {
-        const user = await this.usersRepository.findOne(id);
+        const user = await this.usersRepository.findOne(id, {
+            relations: ['roles'],
+        });
 
         if (user) {
             return user;
