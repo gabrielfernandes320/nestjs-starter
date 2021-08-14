@@ -65,21 +65,21 @@ export class AuthController {
         @Res() resp: Response,
         @Req() req: Request,
     ) {
-        try {
-            const { user, cookie, token } = await this.loginService.execute(
-                loginDto,
-            );
+        // try {
+        const { user, cookie, token } = await this.loginService.execute(
+            loginDto,
+        );
 
-            resp.setHeader('Set-Cookie', cookie);
+        resp.setHeader('Set-Cookie', cookie);
 
-            return resp.send(user);
-        } catch (error) {
-            console.log(error);
-            throw new HttpException(
-                'Usuário ou senha inválida',
-                HttpStatus.UNAUTHORIZED,
-            );
-        }
+        return resp.send(user);
+        // } catch (error) {
+        //     console.log(error);
+        //     throw new HttpException(
+        //         'Usuário ou senha inválida',
+        //         HttpStatus.UNAUTHORIZED,
+        //     );
+        // }
     }
 
     @ApiResponse({
@@ -90,7 +90,7 @@ export class AuthController {
         status: 404,
         description: 'Erro ao realizar recuperação de senha',
     })
-    @Post('send-password-reset-request')
+    @Post('password/reset')
     public async requestResetPassword(
         @Body() passowordResetRequestDto: PasswordResetRequestDTO,
     ) {
