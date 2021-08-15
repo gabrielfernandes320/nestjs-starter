@@ -47,7 +47,7 @@ export class AuthController {
 
         resp.setHeader('Set-Cookie', cookie);
 
-        return resp.send(user);
+        return resp.send({ user, token });
     }
 
     @ApiResponse({

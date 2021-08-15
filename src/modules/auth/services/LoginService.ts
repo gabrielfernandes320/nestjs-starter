@@ -31,7 +31,7 @@ export default class LoginService {
                 return {
                     token,
                     user: userData,
-                    cookie: `Authentication=${token};  Domain=${this.configService.get(
+                    cookie: `Authentication=${token}; Domain=${this.configService.get(
                         'AUTH_COOKIE_DOMAIN',
                     )}; HttpOnly; Path=/; Max-Age=${this.configService.get(
                         'AUTH_COOKIE_EXPIRATION',

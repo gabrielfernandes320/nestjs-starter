@@ -7,8 +7,10 @@ import {
     Patch,
     Post,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import { TransformClassToPlain } from 'class-transformer';
+import JwtAuthenticationGuard from 'src/modules/auth/guards/JwtAuthenticationGuard';
 import CreateUserDTO from '../../dtos/CreateUserDTO';
 import ListUserDTO from '../../dtos/ListUserDTO';
 import UpdateUserDTO from '../../dtos/UpdateUserDTO';
@@ -18,6 +20,7 @@ import ListUserService from '../../services/ListUserService';
 import ShowUserService from '../../services/ShowUserService';
 import UpdateUserService from '../../services/UpdateUserService';
 
+@UseGuards(JwtAuthenticationGuard)
 @Controller('users')
 export class UsersController {
     public constructor(
