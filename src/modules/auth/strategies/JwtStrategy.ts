@@ -19,11 +19,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
                 (request: Request) => request?.cookies?.Authentication,
             ]),
             ignoreExpiration: false,
-            secretOrKey: configService.get('JWT_SECRET_KEY'),
+            secretOrKey: configService.get('JWT_SECRET'),
         });
     }
 
     public async validate(payload: any) {
+        console.log('validate');
+
         return this.usersRepository.findById(payload.id);
     }
 }

@@ -24,18 +24,17 @@ export default class LoginService {
                     id: user.id,
                     name: user.name,
                     email: user.email,
-                    roles: user.roles.map((item) => item.reference),
+                    roles: [],
                 };
-
                 const token = this.jwtService.sign(userData);
 
                 return {
                     token,
                     user: userData,
                     cookie: `Authentication=${token};  Domain=${this.configService.get(
-                        'COOKIE_DOMAIN',
+                        'AUTH_COOKIE_DOMAIN',
                     )}; HttpOnly; Path=/; Max-Age=${this.configService.get(
-                        'COOKIE_EXPIRATION',
+                        'AUTH_COOKIE_EXPIRATION',
                     )}`,
                 };
             }
