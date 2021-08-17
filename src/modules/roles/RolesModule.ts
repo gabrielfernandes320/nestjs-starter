@@ -2,20 +2,23 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RolesController } from './infra/http/RolesController';
 import ShowRoleService from './services/ShowRoleService';
-import ListRoleService from './services/ListRolesService';
 import DeleteRoleService from './services/DeleteRoleService';
-import SaveRoleService from './services/SaveRoleService';
 import { Role } from './infra/typeorm/entities/RoleEntity';
 import providers from './providers';
+import CreateRoleService from './services/CreateRoleService';
+import ListRoleService from './services/ListRoleService';
+import UpdateRoleService from './services/UpdateRoleService';
+import { Permission } from './infra/typeorm/entities/PermissionEntity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Role])],
+    imports: [TypeOrmModule.forFeature([Role, Permission])],
     providers: [
         ...[
             ShowRoleService,
-            SaveRoleService,
-            ListRoleService,
             DeleteRoleService,
+            CreateRoleService,
+            ListRoleService,
+            UpdateRoleService,
         ],
         ...providers,
     ],

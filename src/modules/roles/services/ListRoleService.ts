@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import ListRolesDTO from '../dtos/ListRolesDTO';
+import ListRoleDTO from '../dtos/ListRoleDTO';
 import { Role } from '../infra/typeorm/entities/RoleEntity';
 import IRolesRepository from '../repositories/IRolesRepository';
 
@@ -10,7 +10,7 @@ export default class ListRoleService {
         private rolesRepository: IRolesRepository,
     ) {}
 
-    public async execute(params: ListRolesDTO): Promise<Role[]> {
-        return await this.rolesRepository.findAll(params);
+    public async execute(listRoleDto: ListRoleDTO): Promise<Role[]> {
+        return await this.rolesRepository.findAll(listRoleDto);
     }
 }

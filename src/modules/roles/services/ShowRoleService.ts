@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Role } from '../../roles/infra/typeorm/entities/RoleEntity';
-import IRolesRepository from '../../roles/repositories/IRolesRepository';
+import { Role } from '../infra/typeorm/entities/RoleEntity';
+import IRolesRepository from '../repositories/IRolesRepository';
 
 @Injectable()
 export default class ShowRoleService {
@@ -9,9 +9,7 @@ export default class ShowRoleService {
         private rolesRepository: IRolesRepository,
     ) {}
 
-    public async execute(roleId): Promise<Role> {
-        const Role = await this.rolesRepository.findById(roleId);
-
-        return Role;
+    public async execute(id: number): Promise<Role> {
+        return await this.rolesRepository.findById(id);
     }
 }

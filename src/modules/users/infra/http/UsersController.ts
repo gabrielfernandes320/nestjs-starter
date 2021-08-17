@@ -10,7 +10,10 @@ import {
     UseGuards,
 } from '@nestjs/common';
 import { TransformClassToPlain } from 'class-transformer';
+import { Permissions } from 'src/modules/auth/decorators/PermissionsDecorator';
+import { Permission } from 'src/modules/auth/enums/PermissionsEnum';
 import JwtAuthenticationGuard from 'src/modules/auth/guards/JwtAuthenticationGuard';
+import { PermissionsGuard } from 'src/modules/auth/guards/PermissionsGuard';
 import CreateUserDTO from '../../dtos/CreateUserDTO';
 import ListUserDTO from '../../dtos/ListUserDTO';
 import UpdateUserDTO from '../../dtos/UpdateUserDTO';
@@ -36,6 +39,8 @@ export class UsersController {
         return this.createUserService.execute(createUserDto);
     }
 
+    @Permissions(Permission.ListUsers)
+    @UseGuards(PermissionsGuard)
     @Get()
     public findAll(@Query() query: ListUserDTO) {
         return this.listUserService.execute(query);

@@ -28,6 +28,10 @@ export class UsersRepository implements IUsersRepository {
 
         userToUpdate.id = id;
 
+        if (userToUpdate.password === '') {
+            userToUpdate.password = undefined;
+        }
+
         const updatedUser = await this.usersRepository.save(userToUpdate);
 
         if (updatedUser) {
@@ -57,7 +61,7 @@ export class UsersRepository implements IUsersRepository {
 
     public async findById(id: number): Promise<User> {
         const user = await this.usersRepository.findOne(id, {
-            relations: ['roles'],
+            relations: ['roles', 'roles.permissions'],
         });
 
         if (user) {

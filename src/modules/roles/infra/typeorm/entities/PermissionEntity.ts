@@ -13,10 +13,9 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { Permission } from './PermissionEntity';
 
-@Entity('roles')
-export class Role {
+@Entity('permissions')
+export class Permission {
     @ApiProperty()
     @PrimaryGeneratedColumn()
     public id: number;
@@ -30,13 +29,12 @@ export class Role {
     public reference: string;
 
     @ApiProperty()
-    @ManyToMany(() => Permission, (permission) => permission.name)
-    @JoinTable({
-        name: 'roles_permissions',
-        joinColumns: [{ name: 'role_id' }],
-        inverseJoinColumns: [{ name: 'permission_id' }],
-    })
-    public permissions: Permission[];
+    @Column()
+    public resource: string;
+
+    @ApiProperty()
+    @Column()
+    public action: string;
 
     @ApiProperty()
     @CreateDateColumn({ name: 'created_at' })

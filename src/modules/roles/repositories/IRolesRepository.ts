@@ -1,5 +1,6 @@
-import ListRolesDTO from '../dtos/ListRolesDTO';
-import SaveRoleDTO from '../dtos/SaveRoleDTO';
+import UpdateRoleDTO from 'src/modules/roles/dtos/UpdateRoleDTO';
+import ListRolesDTO from '../dtos/ListRoleDTO';
+import CreateRoleDTO from '../dtos/CreateRoleDTO';
 import { Role } from '../infra/typeorm/entities/RoleEntity';
 
 export default interface IRolesRepository {
@@ -9,7 +10,7 @@ export default interface IRolesRepository {
 
     remove(id: number): Promise<void>;
 
-    save(role: SaveRoleDTO): Promise<Role>;
+    create(user: CreateRoleDTO): Promise<Role>;
 
-    findByReference(reference: string): Promise<Role>;
+    update(id: number, user: UpdateRoleDTO): Promise<Role>;
 }
