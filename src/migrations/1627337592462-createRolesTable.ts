@@ -27,6 +27,10 @@ export class createRolesTable1627337592462 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
+                        name: 'enabled',
+                        type: 'boolean',
+                    },
+                    {
                         name: 'created_at',
                         type: 'timestamp',
                     },

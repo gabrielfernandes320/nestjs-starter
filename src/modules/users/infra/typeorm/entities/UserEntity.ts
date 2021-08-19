@@ -16,7 +16,6 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { IsOptional } from 'class-validator';
 
 @Entity('users')
 export class User {

@@ -44,6 +44,7 @@ export class RolesRepository implements IRolesRepository {
             order: { id: order },
             take: perPage,
             skip: perPage * (page - 1),
+            relations: ['permissions'],
         });
 
         return {

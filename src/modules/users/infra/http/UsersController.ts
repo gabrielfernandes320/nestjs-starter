@@ -23,7 +23,7 @@ import ListUserService from '../../services/ListUserService';
 import ShowUserService from '../../services/ShowUserService';
 import UpdateUserService from '../../services/UpdateUserService';
 
-@UseGuards(JwtAuthenticationGuard)
+//@UseGuards(JwtAuthenticationGuard)
 @Controller('users')
 export class UsersController {
     public constructor(

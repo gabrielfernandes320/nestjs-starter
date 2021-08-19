@@ -7,8 +7,11 @@ import { Role } from './infra/typeorm/entities/RoleEntity';
 import providers from './providers';
 import CreateRoleService from './services/CreateRoleService';
 import ListRoleService from './services/ListRoleService';
+import ListPermissionService from './services/ListPermissionService';
+
 import UpdateRoleService from './services/UpdateRoleService';
 import { Permission } from './infra/typeorm/entities/PermissionEntity';
+import { PermissionsController } from './infra/http/PermissionsController';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Role, Permission])],
@@ -19,10 +22,11 @@ import { Permission } from './infra/typeorm/entities/PermissionEntity';
             CreateRoleService,
             ListRoleService,
             UpdateRoleService,
+            ListPermissionService,
         ],
         ...providers,
     ],
-    controllers: [RolesController],
+    controllers: [RolesController, PermissionsController],
     exports: providers,
 })
 export class RolesModule {}

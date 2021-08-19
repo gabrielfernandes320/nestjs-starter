@@ -39,6 +39,10 @@ export class Role {
     public permissions: Permission[];
 
     @ApiProperty()
+    @Column()
+    public enabled: boolean;
+
+    @ApiProperty()
     @CreateDateColumn({ name: 'created_at' })
     public createdAt: Date;
 
