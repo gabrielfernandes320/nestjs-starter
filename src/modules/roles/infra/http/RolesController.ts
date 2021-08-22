@@ -31,30 +31,30 @@ export class RolesController {
     ) {}
 
     @Post()
-    public create(@Body() createRoleDto: CreateRoleDTO) {
-        return this.createRoleService.execute(createRoleDto);
+    public async create(@Body() createRoleDto: CreateRoleDTO) {
+        return await this.createRoleService.execute(createRoleDto);
     }
 
     @Get()
-    public findAll(@Query() query: ListRoleDTO) {
-        return this.listRoleService.execute(query);
+    public async findAll(@Query() query: ListRoleDTO) {
+        return await this.listRoleService.execute(query);
     }
 
     @Get(':id')
-    public findOne(@Param('id') id: number) {
-        return this.showRoleService.execute(id);
+    public async findOne(@Param('id') id: number) {
+        return await this.showRoleService.execute(id);
     }
 
     @Patch(':id')
-    public update(
+    public async update(
         @Param('id') id: number,
         @Body() updateRoleDto: UpdateRoleDTO,
     ) {
-        return this.updateRoleService.execute(id, updateRoleDto);
+        return await this.updateRoleService.execute(id, updateRoleDto);
     }
 
     @Delete(':id')
-    public remove(@Param('id') id: number) {
-        return this.deleteRoleService.execute(id);
+    public async remove(@Param('id') id: number) {
+        return await this.deleteRoleService.execute(id);
     }
 }

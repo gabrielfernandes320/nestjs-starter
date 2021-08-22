@@ -14,6 +14,8 @@ import CreateRoleService from '../../services/CreateRoleService';
 import UpdateRoleService from '../../services/UpdateRoleService';
 import DeleteRoleService from '../../services/DeleteRoleService';
 import ShowRoleService from '../../services/ShowRoleService';
+import { datatype } from 'faker';
+import ListRolesDTO from '../../dtos/ListRoleDTO';
 
 describe('RolesController', () => {
     let rolesController: RolesController;
@@ -23,15 +25,23 @@ describe('RolesController', () => {
         execute: jest.fn(async () => mockRoles),
     };
     const mockCreateRolesService = {
-        execute: jest.fn(async (createRoleDto: CreateRoleDTO) => createRoleDto),
+        execute: jest.fn(async (createRoleDto: CreateRoleDTO) => ({
+            id: datatype.number(),
+            ...createRoleDto,
+        })),
     };
-    const mockUpdateRolesService = {
-        execute: jest.fn(
-            async (id: number, updateRoleDto: UpdateRoleDTO) => mockRoles,
-        ),
+    const mockUpdateRoleService = {
+        execute: jest.fn(async (id: number, updateRoleDto: UpdateRoleDTO) => ({
+            id,
+            ...updateRoleDto,
+        })),
     };
-    const mockDeleteRolesService = {
-        execute: jest.fn(async () => mockRoles),
+    const mockDeleteRoleService = {
+        execute: jest.fn(async (id: Number) => {
+            id = id;
+
+            return;
+        }),
     };
 
     const mockShowRoleService = {
@@ -52,11 +62,11 @@ describe('RolesController', () => {
                 },
                 {
                     provide: UpdateRoleService,
-                    useValue: mockUpdateRolesService,
+                    useValue: mockUpdateRoleService,
                 },
                 {
                     provide: DeleteRoleService,
-                    useValue: mockDeleteRolesService,
+                    useValue: mockDeleteRoleService,
                 },
                 {
                     provide: ShowRoleService,
@@ -70,14 +80,22 @@ describe('RolesController', () => {
     });
 
     describe('findAll', () => {
+        const mockParams: ListRolesDTO = {};
+
         it('should return an array of roles', async () => {
-            expect(await rolesController.findAll({})).toEqual(mockRoles);
+            expect(await rolesController.findAll(mockParams)).toEqual(
+                mockRoles,
+            );
         });
     });
 
     describe('show', () => {
         it('should return a role', async () => {
             expect(await rolesController.findOne(0)).toEqual(mockRoles[0]);
+
+            expect(mockShowRoleService.execute).toHaveBeenCalledWith(
+                expect.any(Number),
+            );
         });
     });
 
@@ -85,28 +103,40 @@ describe('RolesController', () => {
         it('should create a role', async () => {
             const mockRoleDto = CreateRoleDtoMock.build();
 
-            expect(await rolesController.create(mockRoleDto)).toEqual(
+            expect(await rolesController.create(mockRoleDto)).toEqual({
+                id: expect.any(Number),
+                ...mockRoleDto,
+            });
+
+            expect(mockCreateRolesService.execute).toHaveBeenCalledWith(
                 mockRoleDto,
             );
         });
     });
 
-    // describe('update', () => {
-    //     it('should update a role', async () => {
-    //         const mockRoleDto = CreateRoleDtoMock.build();
+    describe('update', () => {
+        it('should update a role', async () => {
+            const mockRoleDto = UpdateRoleDtoMock.build();
 
-    //         // expect(await rolesController.create(mockRoleDto)).toEqual(
-    //         //     mockRoleDto,
-    //         // );
-    //         expect(
-    //             await rolesController.update(+1, {} as UpdateRoleDTO),
-    //         ).toEqual(mockRoleDto);
-    //     });
-    // });
+            expect(
+                await rolesController.update(+mockRoleDto.id, mockRoleDto),
+            ).toEqual({
+                id: expect.any(Number),
+                ...mockRoleDto,
+            });
+
+            expect(mockUpdateRoleService.execute).toHaveBeenCalledWith(
+                +mockRoleDto.id,
+                mockRoleDto,
+            );
+        });
+    });
 
     describe('remove', () => {
         it('should remove a role', async () => {
-            expect(await rolesController.remove(0)).toHaveBeenCalled();
+            expect(await rolesController.remove(1)).toEqual(undefined);
+
+            expect(mockDeleteRoleService.execute).toHaveBeenCalled();
         });
     });
 });

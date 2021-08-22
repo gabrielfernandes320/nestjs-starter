@@ -9,7 +9,7 @@ export class PermissionsController {
     public constructor(private listPermissionService: ListPermissionService) {}
 
     @Get()
-    public findAll(@Query() query: any) {
-        return this.listPermissionService.execute(query);
+    public async findAll(@Query() query: any) {
+        return await this.listPermissionService.execute(query);
     }
 }

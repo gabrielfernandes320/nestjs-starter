@@ -6,11 +6,11 @@ import * as Factory from 'factory.ts';
 
 export const RoleMock = Factory.Sync.makeFactory<Role>({
     id: Factory.each((i) => i),
-    name: 'List users',
+    name: 'Admin',
     enabled: true,
     createdAt: new Date(),
     deletedAt: null,
-    reference: 'LIST:USERS',
+    reference: 'ADMINISTRATOR',
     updatedAt: new Date(),
     permissions: PermissionMock.buildList(2),
     setCreated: () => {},

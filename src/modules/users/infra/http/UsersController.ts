@@ -35,33 +35,33 @@ export class UsersController {
     ) {}
 
     @Post()
-    public create(@Body() createUserDto: CreateUserDTO) {
-        return this.createUserService.execute(createUserDto);
+    public async create(@Body() createUserDto: CreateUserDTO) {
+        return await this.createUserService.execute(createUserDto);
     }
 
     @Permissions(Permission.ListUsers)
     @UseGuards(PermissionsGuard)
     @Get()
-    public findAll(@Query() query: ListUserDTO) {
-        return this.listUserService.execute(query);
+    public async findAll(@Query() query: ListUserDTO) {
+        return await this.listUserService.execute(query);
     }
 
     @Get(':id')
     @TransformClassToPlain()
-    public findOne(@Param('id') id: number) {
-        return this.showUserService.execute(id);
+    public async findOne(@Param('id') id: number) {
+        return await this.showUserService.execute(id);
     }
 
     @Patch(':id')
-    public update(
+    public async update(
         @Param('id') id: number,
         @Body() updateUserDto: UpdateUserDTO,
     ) {
-        return this.updateUserService.execute(id, updateUserDto);
+        return await this.updateUserService.execute(id, updateUserDto);
     }
 
     @Delete(':id')
-    public remove(@Param('id') id: number) {
-        return this.deleteUserService.execute(id);
+    public async remove(@Param('id') id: number) {
+        return await this.deleteUserService.execute(id);
     }
 }
