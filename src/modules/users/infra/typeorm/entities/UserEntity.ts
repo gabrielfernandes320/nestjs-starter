@@ -1,5 +1,3 @@
-import hashPassword from 'src/shared/utils/hashPassword';
-import { Role } from 'src/modules/roles/infra/typeorm/entities/RoleEntity';
 import {
     BeforeInsert,
     BeforeUpdate,
@@ -16,6 +14,8 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
+import hashPassword from '../../../../../shared/utils/hashPassword';
+import { Role } from '../../../../roles/infra/typeorm/entities/RoleEntity';
 
 @Entity('users')
 export class User {

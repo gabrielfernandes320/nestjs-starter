@@ -5,8 +5,7 @@ import {
     Inject,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import userHasPermissions from 'src/shared/utils/userHasPermission';
-import { Permission } from '../enums/PermissionsEnum';
+import userHasPermissions from '../../../shared/utils/userHasPermission';
 
 export const PERMISSIONS_KEY = 'permissions';
 

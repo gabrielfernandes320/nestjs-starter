@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from 'src/modules/users/infra/typeorm/entities/UserEntity';
 import {
     BeforeInsert,
     BeforeUpdate,

@@ -3,7 +3,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import ValidateUserService from '../services/ValidateUserService';
 import LoginDTO from '../dtos/LoginDTO';
-import { User } from 'src/modules/users/infra/typeorm/entities/UserEntity';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {

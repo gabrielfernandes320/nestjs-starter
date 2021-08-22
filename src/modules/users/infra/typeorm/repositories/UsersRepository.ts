@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
-import { Repository, Like, ILike, IsNull, Brackets } from 'typeorm';
+import { Repository, ILike } from 'typeorm';
 import { User } from '../entities/UserEntity';
-import hashPassword from 'src/shared/utils/hashPassword';
 import CreateUserDTO from 'src/modules/users/dtos/CreateUserDTO';
 import UpdateUserDTO from 'src/modules/users/dtos/UpdateUserDTO';
 import { plainToClass } from 'class-transformer';
-import UserNotFoundException from 'src/modules/users/exceptions/UserNotFoundException';
 import ListUserDTO from 'src/modules/users/dtos/ListUserDTO';
+import UserNotFoundException from '../../../exceptions/UserNotFoundException';
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
