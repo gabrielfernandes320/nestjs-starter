@@ -9,7 +9,7 @@ import {
     Query,
     UseGuards,
 } from '@nestjs/common';
-import JwtAuthenticationGuard from 'src/modules/auth/guards/JwtAuthenticationGuard';
+import JwtAuthenticationGuard from '../../../auth/guards/JwtAuthenticationGuard';
 import CreateRoleDTO from '../../dtos/CreateRoleDTO';
 import ListRoleDTO from '../../dtos/ListRoleDTO';
 import UpdateRoleDTO from '../../dtos/UpdateRoleDTO';

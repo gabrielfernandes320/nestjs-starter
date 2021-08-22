@@ -1,0 +1,31 @@
+import UpdateRoleDTO from '../../roles/dtos/UpdateRoleDTO';
+import CreateRoleDTO from '../../roles/dtos/CreateRoleDTO';
+import { PermissionMock } from './PermissionFactory';
+import { Role } from './../infra/typeorm/entities/RoleEntity';
+import * as Factory from 'factory.ts';
+
+export const RoleMock = Factory.Sync.makeFactory<Role>({
+    id: Factory.each((i) => i),
+    name: 'List users',
+    enabled: true,
+    createdAt: new Date(),
+    deletedAt: null,
+    reference: 'LIST:USERS',
+    updatedAt: new Date(),
+    permissions: PermissionMock.buildList(2),
+    setCreated: () => {},
+    setUpdatedAt: () => {},
+});
+
+export const CreateRoleDtoMock = Factory.Sync.makeFactory<CreateRoleDTO>({
+    name: 'Admin',
+    reference: 'ADMINISTRATOR',
+    permissions: [{ id: 1 }, { id: 2 }],
+});
+
+export const UpdateRoleDtoMock = Factory.Sync.makeFactory<UpdateRoleDTO>({
+    id: Factory.each((i) => i),
+    name: 'Admin',
+    reference: 'ADMINISTRATOR',
+    permissions: [{ id: 1 }, { id: 2 }],
+});

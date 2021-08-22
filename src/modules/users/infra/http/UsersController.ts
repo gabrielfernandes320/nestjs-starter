@@ -12,7 +12,7 @@ import {
 import { TransformClassToPlain } from 'class-transformer';
 import { Permissions } from 'src/modules/auth/decorators/PermissionsDecorator';
 import { Permission } from 'src/modules/auth/enums/PermissionsEnum';
-import JwtAuthenticationGuard from 'src/modules/auth/guards/JwtAuthenticationGuard';
+import JwtAuthenticationGuard from '../../../auth/guards/JwtAuthenticationGuard';
 import { PermissionsGuard } from 'src/modules/auth/guards/PermissionsGuard';
 import CreateUserDTO from '../../dtos/CreateUserDTO';
 import ListUserDTO from '../../dtos/ListUserDTO';
@@ -23,7 +23,7 @@ import ListUserService from '../../services/ListUserService';
 import ShowUserService from '../../services/ShowUserService';
 import UpdateUserService from '../../services/UpdateUserService';
 
-//@UseGuards(JwtAuthenticationGuard)
+@UseGuards(JwtAuthenticationGuard)
 @Controller('users')
 export class UsersController {
     public constructor(

@@ -8,5 +8,5 @@ export default class CreateRoleDTO {
     public reference: string;
 
     @IsNotEmpty()
-    public permissions: { id: string }[];
+    public permissions: { id: string | number }[];
 }

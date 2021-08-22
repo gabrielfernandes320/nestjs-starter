@@ -1,15 +1,5 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Patch,
-    Post,
-    Query,
-    UseGuards,
-} from '@nestjs/common';
-import JwtAuthenticationGuard from 'src/modules/auth/guards/JwtAuthenticationGuard';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import JwtAuthenticationGuard from '../../../auth/guards/JwtAuthenticationGuard';
 import ListPermissionDTO from '../../dtos/ListPermissionDTO';
 import ListPermissionService from '../../services/ListPermissionService';
 
@@ -19,7 +9,7 @@ export class PermissionsController {
     public constructor(private listPermissionService: ListPermissionService) {}
 
     @Get()
-    public findAll(@Query() query: ListPermissionDTO) {
+    public findAll(@Query() query: any) {
         return this.listPermissionService.execute(query);
     }
 }
