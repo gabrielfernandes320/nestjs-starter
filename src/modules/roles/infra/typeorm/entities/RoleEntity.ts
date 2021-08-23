@@ -1,25 +1,10 @@
+import { BaseEntity } from './../../../../../shared/infra/typeorm/entities/BaseEntity';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-    BeforeInsert,
-    BeforeUpdate,
-    Column,
-    CreateDateColumn,
-    DeleteDateColumn,
-    Entity,
-    JoinTable,
-    ManyToMany,
-    OneToMany,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 import { Permission } from './PermissionEntity';
 
 @Entity('roles')
-export class Role {
-    @ApiProperty()
-    @PrimaryGeneratedColumn()
-    public id: number;
-
+export class Role extends BaseEntity {
     @ApiProperty()
     @Column()
     public name: string;
@@ -40,27 +25,4 @@ export class Role {
     @ApiProperty()
     @Column()
     public enabled: boolean;
-
-    @ApiProperty()
-    @CreateDateColumn({ name: 'created_at' })
-    public createdAt: Date;
-
-    @ApiProperty()
-    @UpdateDateColumn({ name: 'updated_at' })
-    public updatedAt: Date;
-
-    @ApiProperty()
-    @DeleteDateColumn({ name: 'deleted_at', nullable: true })
-    public deletedAt: Date;
-
-    @BeforeInsert()
-    public setCreated() {
-        this.createdAt = new Date();
-    }
-
-    @BeforeUpdate()
-    @BeforeInsert()
-    public setUpdatedAt() {
-        this.updatedAt = new Date();
-    }
 }
