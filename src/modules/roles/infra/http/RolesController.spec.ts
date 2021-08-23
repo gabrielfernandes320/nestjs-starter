@@ -4,7 +4,7 @@ import {
     RoleMock,
     CreateRoleDtoMock,
     UpdateRoleDtoMock,
-} from './../../factories/RoleFactory';
+} from '../../mocks/RoleMockFactory';
 import { RolesController } from './RolesController';
 import ListRoleService from '../../services/ListRoleService';
 import { Role } from '../typeorm/entities/RoleEntity';

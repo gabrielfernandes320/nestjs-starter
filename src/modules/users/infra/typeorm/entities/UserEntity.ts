@@ -63,7 +63,7 @@ export class User {
     public roles: Role[];
 
     @BeforeInsert()
-    public async setCreated() {
+    public setCreated() {
         this.createdAt = new Date();
     }
 

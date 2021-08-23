@@ -1,4 +1,4 @@
-import { PermissionMock } from './../../factories/PermissionFactory';
+import { PermissionMock } from '../../mocks/PermissionMockFactory';
 import { PermissionsController } from './PermissionsController';
 import ListPermissionService from '../../services/ListPermissionService';
 import { Permission } from '../typeorm/entities/PermissionEntity';

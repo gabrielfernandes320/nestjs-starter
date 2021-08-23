@@ -1,3 +1,4 @@
+import { UserMock } from './../src/modules/users/mocks/UserMockFactory';
 import { UsersModule } from './../src/modules/users/UsersModule';
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
@@ -8,9 +9,13 @@ import { User } from '../src/modules/users/infra/typeorm/entities/UserEntity';
 describe('UsersController (e2e)', () => {
     let app: INestApplication;
 
+    const mockUsers = UserMock.buildList(6);
+
     const mockUsersRepository = {
-        findAll: jest.fn(),
-        findAndCount: jest.fn(),
+        findAll: jest
+            .fn()
+            .mockResolvedValue({ value: mockUsers, total: 6, pages: 2 }),
+        findAndCount: jest.fn().mockResolvedValue([mockUsers, 6]),
     };
 
     beforeAll(async () => {
@@ -26,5 +31,9 @@ describe('UsersController (e2e)', () => {
     });
 
     it('/users (GET)', () =>
-        request(app.getHttpServer()).get('/users').expect(200));
+        request(app.getHttpServer())
+            .get('/users')
+            .expect(200)
+            .expect('Content-Type')
+            .expect({ value: mockUsers, total: 6, pages: 2 }));
 });

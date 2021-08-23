@@ -1,7 +1,7 @@
-import UpdateRoleDTO from '../../roles/dtos/UpdateRoleDTO';
-import CreateRoleDTO from '../../roles/dtos/CreateRoleDTO';
-import { PermissionMock } from './PermissionFactory';
-import { Role } from './../infra/typeorm/entities/RoleEntity';
+import UpdateRoleDTO from '../dtos/UpdateRoleDTO';
+import CreateRoleDTO from '../dtos/CreateRoleDTO';
+import { PermissionMock } from './PermissionMockFactory';
+import { Role } from '../infra/typeorm/entities/RoleEntity';
 import * as Factory from 'factory.ts';
 
 export const RoleMock = Factory.Sync.makeFactory<Role>({

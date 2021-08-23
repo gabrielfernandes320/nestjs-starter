@@ -1,4 +1,4 @@
-import { Permission } from './../infra/typeorm/entities/PermissionEntity';
+import { Permission } from '../infra/typeorm/entities/PermissionEntity';
 import * as Factory from 'factory.ts';
 
 export const PermissionMock = Factory.Sync.makeFactory<Permission>({
