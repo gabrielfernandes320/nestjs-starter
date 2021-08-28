@@ -20,7 +20,10 @@ import ShowRoleService from '../../services/ShowRoleService';
 import UpdateRoleService from '../../services/UpdateRoleService';
 
 @UseGuards(JwtAuthenticationGuard)
-@Controller('roles')
+@Controller({
+    version: '1',
+    path: 'roles',
+})
 export class RolesController {
     public constructor(
         private createRoleService: CreateRoleService,

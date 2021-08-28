@@ -22,7 +22,10 @@ import { ApiTags, ApiResponse, ApiProperty } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 
 @ApiTags('Auth')
-@Controller('auth')
+@Controller({
+    version: '1',
+    path: 'auth',
+})
 export class AuthController {
     public constructor(private loginService: LoginService) {}
 

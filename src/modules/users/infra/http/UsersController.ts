@@ -24,7 +24,10 @@ import ShowUserService from '../../services/ShowUserService';
 import UpdateUserService from '../../services/UpdateUserService';
 
 @UseGuards(JwtAuthenticationGuard)
-@Controller('users')
+@Controller({
+    version: '1',
+    path: 'users',
+})
 export class UsersController {
     public constructor(
         private createUserService: CreateUserService,
