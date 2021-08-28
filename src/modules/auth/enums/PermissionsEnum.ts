@@ -1,7 +1,13 @@
 export enum Permission {
-    ListUsers = 'USERS:LIST',
-    CreateUser = 'USERS:CREATE',
-    UpdateUser = 'USERS:UPDATE',
-    DeleteUser = 'USERS:DELETE',
-    GetUser = 'USERS:GET',
+    ListUsers = 'LIST:USERS',
+    CreateUsers = 'CREATE:USERS',
+    UpdateUsers = 'UPDATE:USERS',
+    DeleteUsers = 'DELETE:USERS',
+    ShowUsers = 'SHOW:USERS',
+
+    ListRoles = 'LIST:ROLES',
+    CreateRoles = 'CREATE:ROLES',
+    UpdateRoles = 'UPDATE:ROLES',
+    DeleteRoles = 'DELETE:ROLES',
+    ShowRoles = 'SHOW:ROLES',
 }
