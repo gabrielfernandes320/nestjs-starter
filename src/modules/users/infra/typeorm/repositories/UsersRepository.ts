@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
 import { Repository, ILike } from 'typeorm';
@@ -8,6 +8,7 @@ import UpdateUserDTO from 'src/modules/users/dtos/UpdateUserDTO';
 import { plainToClass } from 'class-transformer';
 import ListUserDTO from 'src/modules/users/dtos/ListUserDTO';
 import UserNotFoundException from '../../../exceptions/UserNotFoundException';
+import EmailAlreadyExistsException from '../../../exceptions/EmailAlreadyExistsException';
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
@@ -19,11 +20,21 @@ export class UsersRepository implements IUsersRepository {
     public async create(user: CreateUserDTO): Promise<User> {
         const newUser = this.usersRepository.create(plainToClass(User, user));
 
-        return await this.usersRepository.save(newUser);
+        try {
+            return await this.usersRepository.save(newUser);
+        } catch (error) {
+            this.handleErrors(error, newUser);
+        }
     }
 
-    public async update(id: number, user: UpdateUserDTO): Promise<User> {
-        let userToUpdate = plainToClass(User, user);
+    public async update(id: number, userDto: UpdateUserDTO): Promise<User> {
+        const user = await this.usersRepository.findOne(id);
+
+        if (!user) {
+            throw new UserNotFoundException(id);
+        }
+
+        let userToUpdate = plainToClass(User, userDto);
 
         userToUpdate.id = id;
 
@@ -36,8 +47,6 @@ export class UsersRepository implements IUsersRepository {
         if (updatedUser) {
             return updatedUser;
         }
-
-        throw new UserNotFoundException(id);
     }
 
     public async findAll(params: ListUserDTO): Promise<any> {
@@ -82,5 +91,15 @@ export class UsersRepository implements IUsersRepository {
         return await this.usersRepository.findOne({
             where: { email },
         });
+    }
+
+    private handleErrors(error: any, user: User) {
+        switch (error.code) {
+            case '23505':
+                throw new EmailAlreadyExistsException(user.email);
+
+            default:
+                throw HttpException;
+        }
     }
 }

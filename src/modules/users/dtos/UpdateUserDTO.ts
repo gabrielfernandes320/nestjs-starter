@@ -1,11 +1,15 @@
+import { IsNotEmpty, IsOptional } from 'class-validator';
+
 export default class UpdateUserDTO {
+    @IsNotEmpty()
     public id: number | string;
-    public name?: string;
-    public email?: string;
-    public roles?: { id: string }[];
-    public enabled: boolean;
-    public password?: string;
-    public createdAt: Date;
-    public updatedAt?: Date;
-    public deletedAt?: Date;
+
+    @IsNotEmpty() public name?: string;
+    @IsNotEmpty() public email?: string;
+    @IsOptional() public roles?: { id: string }[];
+    @IsNotEmpty() public enabled: boolean;
+    @IsOptional() public password?: string;
+    @IsOptional() public createdAt: Date;
+    @IsOptional() public updatedAt?: Date;
+    @IsOptional() public deletedAt?: Date;
 }

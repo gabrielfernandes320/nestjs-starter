@@ -9,6 +9,7 @@ import {
     Query,
     UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import JwtAuthenticationGuard from '../../../auth/guards/JwtAuthenticationGuard';
 import CreateRoleDTO from '../../dtos/CreateRoleDTO';
 import ListRoleDTO from '../../dtos/ListRoleDTO';
@@ -20,6 +21,7 @@ import ShowRoleService from '../../services/ShowRoleService';
 import UpdateRoleService from '../../services/UpdateRoleService';
 
 @UseGuards(JwtAuthenticationGuard)
+@ApiTags('Roles')
 @Controller({
     version: '1',
     path: 'roles',

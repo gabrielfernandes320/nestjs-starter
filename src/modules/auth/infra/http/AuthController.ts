@@ -14,12 +14,10 @@ import {
 } from '@nestjs/common';
 import LoginDTO from '../../dtos/LoginDTO';
 import LoginService from '../../services/LoginService';
-import { Response, response, Request } from 'express';
+import { Response, Request } from 'express';
 import { LocalAuthGuard } from '../../guards/LocalAuthGuard';
-import InvalidTokenException from '../../errors/InvalidTokenException';
 import JwtAuthenticationGuard from '../../guards/JwtAuthenticationGuard';
 import { ApiTags, ApiResponse, ApiProperty } from '@nestjs/swagger';
-import { ConfigService } from '@nestjs/config';
 
 @ApiTags('Auth')
 @Controller({

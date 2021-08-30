@@ -9,6 +9,7 @@ import {
     Query,
     UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { TransformClassToPlain } from 'class-transformer';
 import { Permissions } from '../../../auth/decorators/PermissionsDecorator';
 import { Permission } from '../../../auth/enums/PermissionsEnum';
@@ -24,6 +25,7 @@ import ShowUserService from '../../services/ShowUserService';
 import UpdateUserService from '../../services/UpdateUserService';
 
 @UseGuards(JwtAuthenticationGuard)
+@ApiTags('Users')
 @Controller({
     version: '1',
     path: 'users',
@@ -49,12 +51,14 @@ export class UsersController {
         return await this.listUserService.execute(query);
     }
 
+    @Permissions(Permission.ShowUsers)
     @Get(':id')
     @TransformClassToPlain()
     public async findOne(@Param('id') id: number) {
         return await this.showUserService.execute(id);
     }
 
+    @Permissions(Permission.UpdateUsers)
     @Patch(':id')
     public async update(
         @Param('id') id: number,
@@ -63,6 +67,7 @@ export class UsersController {
         return await this.updateUserService.execute(id, updateUserDto);
     }
 
+    @Permissions(Permission.DeleteUsers)
     @Delete(':id')
     public async remove(@Param('id') id: number) {
         return await this.deleteUserService.execute(id);
