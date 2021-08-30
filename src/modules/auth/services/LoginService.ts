@@ -24,12 +24,11 @@ export default class LoginService {
                     id: user.id,
                     name: user.name,
                     email: user.email,
-                    roles: [],
+                    roles: user.roles,
                 };
                 const token = this.jwtService.sign(userData);
 
                 return {
-                    token,
                     user: userData,
                     cookie: `Authentication=${token}; Domain=${this.configService.get(
                         'AUTH_COOKIE_DOMAIN',
