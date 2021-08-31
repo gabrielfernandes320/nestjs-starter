@@ -45,7 +45,10 @@ export class User extends BaseEntity {
     @BeforeUpdate()
     @BeforeInsert()
     public async setUpdatedAt() {
-        this.password = await hashPassword(this.password);
+        if (this.password) {
+            this.password = await hashPassword(this.password);
+        }
+
         this.updatedAt = new Date();
     }
 }

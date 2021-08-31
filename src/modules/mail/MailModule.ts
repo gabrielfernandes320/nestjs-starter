@@ -1,10 +1,7 @@
-import { HOST } from './../../config/mail';
 import { Module } from '@nestjs/common';
 import SendMailService from './services/SendMailService';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { MailController } from './infra/http/MailController';
-import { PASSWORD, USER } from 'src/config/mail';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -34,7 +31,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
             }),
         }),
     ],
-    controllers: [MailController],
+    controllers: [],
     providers: [SendMailService],
     exports: [SendMailService],
 })

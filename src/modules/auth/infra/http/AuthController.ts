@@ -5,7 +5,6 @@ import {
     Get,
     HttpException,
     HttpStatus,
-    Inject,
     Post,
     Req,
     Res,
@@ -14,10 +13,12 @@ import {
 } from '@nestjs/common';
 import LoginDTO from '../../dtos/LoginDTO';
 import LoginService from '../../services/LoginService';
+import ForgotPasswordService from '../../services/ForgotPasswordService';
 import { Response, Request } from 'express';
 import { LocalAuthGuard } from '../../guards/LocalAuthGuard';
 import JwtAuthenticationGuard from '../../guards/JwtAuthenticationGuard';
-import { ApiTags, ApiResponse, ApiProperty } from '@nestjs/swagger';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import ForgotPasswordDTO from '../../dtos/ForgotPasswordDTO';
 
 @ApiTags('Auth')
 @Controller({
@@ -25,7 +26,10 @@ import { ApiTags, ApiResponse, ApiProperty } from '@nestjs/swagger';
     path: 'auth',
 })
 export class AuthController {
-    public constructor(private loginService: LoginService) {}
+    public constructor(
+        private loginService: LoginService,
+        private forgotPasswordService: ForgotPasswordService,
+    ) {}
 
     @ApiResponse({
         status: 200,
@@ -37,11 +41,7 @@ export class AuthController {
     })
     @UseGuards(LocalAuthGuard)
     @Post('login')
-    public async login(
-        @Body() loginDto: LoginDTO,
-        @Res() resp: Response,
-        @Req() req: Request,
-    ) {
+    public async login(@Body() loginDto: LoginDTO, @Res() resp: Response) {
         const { user, cookie, token } = await this.loginService.execute(
             loginDto,
         );
@@ -83,5 +83,23 @@ export class AuthController {
                 HttpStatus.NOT_FOUND,
             );
         }
+    }
+
+    @ApiResponse({
+        status: 201,
+        description: 'Sends user mail to change password.',
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Erro ao realizar recuperação de senha',
+    })
+    @Post('forgot-password')
+    public async forgotPassword(
+        @Body() forgotPasswordDTO: ForgotPasswordDTO,
+        @Res() resp: Response,
+    ) {
+        await this.forgotPasswordService.execute(forgotPasswordDTO);
+
+        return resp.status(200).send();
     }
 }
