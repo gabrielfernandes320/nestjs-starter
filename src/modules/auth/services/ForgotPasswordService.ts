@@ -7,6 +7,7 @@ import { ISendMailOptions } from '@nestjs-modules/mailer';
 import ForgotPasswordDTO from '../dtos/ForgotPasswordDTO';
 import { User } from '../../users/infra/typeorm/entities/UserEntity';
 import InvalidEmailException from '../exceptions/InvalidEmailException';
+import { Template } from '../../mail/enums/TemplatesEnum';
 
 @Injectable()
 export default class FogotPasswordService {
@@ -37,19 +38,18 @@ export default class FogotPasswordService {
 
         const forgotLink = `${this.configService.get(
             'APP_URL',
-        )}/auth/forgot-password?token=${token}`;
+        )}/auth/change-password/${token}`;
 
         await this.sendMailService.execute({
-            from: this.configService.get<string>('MAIL_USER'),
             to: user.email,
             subject: 'Verify User',
-            html: `
-                <h3>Hello ${user.name}!</h3>
-                <p>Please use this <a href="${forgotLink}">link</a> to confirm your account.</p>
-            `,
+            template: Template.AccountRecovery,
+            html: `<a>${forgotLink} </a>`,
+            // context: {
+            //     Name: user.name,
+            //     Url: forgotLink,
+            // },
         } as ISendMailOptions);
-
-        console.log('aqui');
 
         return user;
     }

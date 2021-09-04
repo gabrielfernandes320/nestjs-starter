@@ -9,10 +9,10 @@ import {
     Query,
     UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiProperty } from '@nestjs/swagger';
 import { TransformClassToPlain } from 'class-transformer';
 import { Permissions } from '../../../auth/decorators/PermissionsDecorator';
-import { Permission } from '../../../auth/enums/PermissionsEnum';
+import Permission from '../../../auth/constants/PermissionsConst';
 import JwtAuthenticationGuard from '../../../auth/guards/JwtAuthenticationGuard';
 import { PermissionsGuard } from '../../../auth/guards/PermissionsGuard';
 import CreateUserDTO from '../../dtos/CreateUserDTO';
@@ -44,21 +44,21 @@ export class UsersController {
         return await this.createUserService.execute(createUserDto);
     }
 
-    @Permissions(Permission.ListUsers)
+    @Permissions(Permission.User.List)
     @UseGuards(PermissionsGuard)
     @Get()
     public async findAll(@Query() query: ListUserDTO) {
         return await this.listUserService.execute(query);
     }
 
-    @Permissions(Permission.ShowUsers)
+    @Permissions(Permission.User.Show)
     @Get(':id')
     @TransformClassToPlain()
     public async findOne(@Param('id') id: number) {
         return await this.showUserService.execute(id);
     }
 
-    @Permissions(Permission.UpdateUsers)
+    @Permissions(Permission.User.Update)
     @Patch(':id')
     public async update(
         @Param('id') id: number,
@@ -67,7 +67,7 @@ export class UsersController {
         return await this.updateUserService.execute(id, updateUserDto);
     }
 
-    @Permissions(Permission.DeleteUsers)
+    @Permissions(Permission.User.Delete)
     @Delete(':id')
     public async remove(@Param('id') id: number) {
         return await this.deleteUserService.execute(id);

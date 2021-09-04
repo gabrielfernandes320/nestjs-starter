@@ -22,10 +22,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
                     from: `<${configService.get('MAIL_USER')}>`,
                 },
                 template: {
-                    dir: process.cwd() + '/src/modules/mail/templates',
+                    dir: __dirname + '/src/modules/mail/templates',
                     adapter: new HandlebarsAdapter(),
                     options: {
-                        strict: true,
+                        strict: false,
                     },
                 },
             }),

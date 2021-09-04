@@ -10,6 +10,7 @@ import { JwtModule } from '@nestjs/jwt';
 import ValidateUserService from './services/ValidateUserService';
 import { LocalStrategy } from './strategies/LocalStrategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import ChangePasswordService from './services/ChangePasswordService';
 
 @Module({
     imports: [
@@ -34,6 +35,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         JwtStrategy,
         LocalStrategy,
         ForgotPasswordService,
+        ChangePasswordService,
     ],
     controllers: [AuthController],
 })

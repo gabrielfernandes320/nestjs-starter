@@ -19,6 +19,8 @@ import { LocalAuthGuard } from '../../guards/LocalAuthGuard';
 import JwtAuthenticationGuard from '../../guards/JwtAuthenticationGuard';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import ForgotPasswordDTO from '../../dtos/ForgotPasswordDTO';
+import ChangePasswordDTO from '../../dtos/ChangePasswordDTO';
+import ChangePasswordService from '../../services/ChangePasswordService';
 
 @ApiTags('Auth')
 @Controller({
@@ -28,6 +30,7 @@ import ForgotPasswordDTO from '../../dtos/ForgotPasswordDTO';
 export class AuthController {
     public constructor(
         private loginService: LoginService,
+        private changePasswordService: ChangePasswordService,
         private forgotPasswordService: ForgotPasswordService,
     ) {}
 
@@ -93,7 +96,7 @@ export class AuthController {
         status: 404,
         description: 'Erro ao realizar recuperação de senha',
     })
-    @Post('forgot-password')
+    @Post('password/forgot')
     public async forgotPassword(
         @Body() forgotPasswordDTO: ForgotPasswordDTO,
         @Res() resp: Response,
@@ -101,5 +104,14 @@ export class AuthController {
         await this.forgotPasswordService.execute(forgotPasswordDTO);
 
         return resp.status(200).send();
+    }
+
+    @ApiResponse({
+        status: 201,
+        description: 'Password altered sucessful',
+    })
+    @Post('password/reset')
+    public async changePassword(@Body() changePasswordDto: ChangePasswordDTO) {
+        return await this.changePasswordService.execute(changePasswordDto);
     }
 }
