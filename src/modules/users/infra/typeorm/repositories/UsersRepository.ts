@@ -90,6 +90,7 @@ export class UsersRepository implements IUsersRepository {
     public async findByEmail(email: string): Promise<any> {
         return await this.usersRepository.findOne({
             where: { email },
+            relations: ['roles', 'roles.permissions'],
         });
     }
 

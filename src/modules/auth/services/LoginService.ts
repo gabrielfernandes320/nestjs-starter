@@ -29,7 +29,7 @@ export default class LoginService {
                 const token = this.jwtService.sign(userData);
 
                 return {
-                    user: userData,
+                    user: user,
                     cookie: `Authentication=${token}; Domain=${this.configService.get(
                         'AUTH_COOKIE_DOMAIN',
                     )}; HttpOnly; Path=/; Max-Age=${this.configService.get(

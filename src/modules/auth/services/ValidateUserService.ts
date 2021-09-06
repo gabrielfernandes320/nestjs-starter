@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
+import hashComparePassword from '../../../shared/utils/hashComparePassword';
 import LoginDTO from '../dtos/LoginDTO';
-import hashComparePassword from 'src/shared/utils/hashComparePassword';
 
 @Injectable()
 export default class ValidateUserService {
