@@ -14,6 +14,8 @@ import ChangePasswordService from './services/ChangePasswordService';
 import AppConfigService from '../config/services/AppConfigService';
 import AuthConfigService from '../config/services/AuthConfigService';
 import JwtConfigService from '../config/services/JwtConfigService';
+import { JwtRefreshTokenStrategy } from './strategies/JwtRefreshTokenStrategy';
+import GenerateCookieService from './services/GenerateCookieService';
 
 @Module({
     imports: [
@@ -39,9 +41,11 @@ import JwtConfigService from '../config/services/JwtConfigService';
         ValidateUserService,
         JwtStrategy,
         LocalStrategy,
+        JwtRefreshTokenStrategy,
         ForgotPasswordService,
         ChangePasswordService,
         JwtConfigService,
+        GenerateCookieService,
     ],
     controllers: [AuthController],
 })

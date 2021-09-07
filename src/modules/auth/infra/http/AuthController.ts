@@ -21,6 +21,10 @@ import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import ForgotPasswordDTO from '../../dtos/ForgotPasswordDTO';
 import ChangePasswordDTO from '../../dtos/ChangePasswordDTO';
 import ChangePasswordService from '../../services/ChangePasswordService';
+import JwtRefreshTokenGuard from '../../guards/JwtRefreshTokenGuard';
+import { User } from '../../../users/infra/typeorm/entities/UserEntity';
+import GenerateCookieService from '../../services/GenerateCookieService';
+import { CookieType } from '../../enums/CookieTypeEnum';
 
 @ApiTags('Auth')
 @Controller({
@@ -32,6 +36,7 @@ export class AuthController {
         private loginService: LoginService,
         private changePasswordService: ChangePasswordService,
         private forgotPasswordService: ForgotPasswordService,
+        private generateCookieService: GenerateCookieService,
     ) {}
 
     @ApiResponse({
@@ -45,11 +50,10 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     public async login(@Body() loginDto: LoginDTO, @Res() resp: Response) {
-        const { user, cookie, token, cookieRefreshToken } =
+        const { user, cookie, cookieRefreshToken } =
             await this.loginService.execute(loginDto);
 
         resp.setHeader('Set-Cookie', [cookie, cookieRefreshToken]);
-        // resp.setHeader('Set-Cookie', cookieRefreshToken);
 
         return resp.send({ user });
     }
@@ -78,6 +82,7 @@ export class AuthController {
     public async logout(@Res() resp: Response) {
         try {
             resp.clearCookie('Authentication');
+            resp.clearCookie('Refresh');
 
             return resp.send();
         } catch (error) {
@@ -113,5 +118,28 @@ export class AuthController {
     @Post('password/reset')
     public async changePassword(@Body() changePasswordDto: ChangePasswordDTO) {
         return await this.changePasswordService.execute(changePasswordDto);
+    }
+
+    @ApiResponse({
+        status: 201,
+        description: 'Refresh users token and refresh token',
+    })
+    @UseGuards(JwtRefreshTokenGuard)
+    @Post('refresh')
+    public async refreshToken(@Req() { user }: Request, @Res() res: Response) {
+        const reqUser = user as User;
+
+        const authCookie = await this.generateCookieService.execute(
+            CookieType.Authentication,
+            reqUser.id,
+        );
+        const refreshTokenCookie = await this.generateCookieService.execute(
+            CookieType.Refresh,
+            reqUser.id,
+        );
+
+        res.setHeader('Set-Cookie', [authCookie, refreshTokenCookie]);
+
+        return res.send();
     }
 }
