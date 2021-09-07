@@ -14,15 +14,16 @@ describe('ValidateUserService', () => {
     let service: ValidateUserService;
     const mockUser = UserMock.build();
     const mockUsersRepository = {
-        //findByEmail: jest.fn().mockResolvedValue(mockUser),
+        findByEmail: jest.fn((email: string) => mockUser),
     };
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
+                { provide: hashComparePassword, useValue: () => true },
                 ValidateUserService,
                 {
-                    provide: getRepositoryToken(User),
+                    provide: 'UsersRepository',
                     useValue: mockUsersRepository,
                 },
             ],
