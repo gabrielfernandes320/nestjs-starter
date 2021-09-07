@@ -3,16 +3,18 @@ import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
 import LoginDTO from '../dtos/LoginDTO';
 import { JwtService } from '@nestjs/jwt';
 import ValidateUserService from './ValidateUserService';
-import { ConfigService } from '@nestjs/config';
+import AuthConfigService from '../../config/services/AuthConfigService';
+import JwtConfigService from '../../config/services/JwtConfigService';
 
 @Injectable()
 export default class LoginService {
     public constructor(
-        private configService: ConfigService,
         @Inject('UsersRepository')
         private usersRepository: IUsersRepository,
         private validateUserService: ValidateUserService,
         private jwtService: JwtService,
+        private authConfigService: AuthConfigService,
+        private jwtConfigService: JwtConfigService,
     ) {}
 
     public async execute(loginDto: LoginDTO): Promise<any> {
@@ -27,18 +29,34 @@ export default class LoginService {
                     roles: user.roles,
                 };
                 const token = this.jwtService.sign(userData);
+                const refreshToken = this.generateRefreshToken(userData);
 
                 return {
                     user: user,
-                    cookie: `Authentication=${token}; Domain=${this.configService.get(
-                        'AUTH_COOKIE_DOMAIN',
-                    )}; HttpOnly; Path=/; Max-Age=${this.configService.get(
-                        'AUTH_COOKIE_EXPIRATION',
-                    )}`,
+                    cookie: this.generateCookie(token),
+                    cookieRefreshToken:
+                        this.generateRefreshTokenCookie(refreshToken),
                 };
             }
         }
 
         throw new Error();
+    }
+
+    private generateCookie(token: string) {
+        return `Authentication=${token}; Domain=${this.authConfigService.cookieDomain}; HttpOnly; Path=/; Max-Age=${this.jwtConfigService.jwtExpirationTime}`;
+    }
+
+    private generateRefreshTokenCookie(token: string) {
+        return `Refresh=${token}; Domain=${this.authConfigService.cookieDomain}; HttpOnly; Path=/; Max-Age=${this.jwtConfigService.jwtRefreshTokenExpirationTime}`;
+    }
+
+    private generateRefreshToken(payload: object) {
+        const token = this.jwtService.sign(payload, {
+            secret: this.jwtConfigService.jwtRefreshTokenSecret,
+            expiresIn: `${this.jwtConfigService.jwtRefreshTokenExpirationTime}s`,
+        });
+
+        return token;
     }
 }

@@ -8,6 +8,7 @@ import ForgotPasswordDTO from '../dtos/ForgotPasswordDTO';
 import { User } from '../../users/infra/typeorm/entities/UserEntity';
 import InvalidEmailException from '../exceptions/InvalidEmailException';
 import { Template } from '../../mail/enums/TemplatesEnum';
+import AppConfigService from '../../config/services/AppConfigService';
 
 @Injectable()
 export default class FogotPasswordService {
@@ -16,6 +17,7 @@ export default class FogotPasswordService {
         @Inject('UsersRepository')
         private usersRepository: IUsersRepository,
         private jwtService: JwtService,
+        private appConfigService: AppConfigService,
         private sendMailService: SendMailService,
     ) {}
 
@@ -36,9 +38,7 @@ export default class FogotPasswordService {
         };
         const token = this.jwtService.sign(userData);
 
-        const forgotLink = `${this.configService.get(
-            'APP_URL',
-        )}/auth/change-password/${token}`;
+        const forgotLink = `${this.appConfigService.appUrl}/auth/change-password/${token}`;
 
         await this.sendMailService.execute({
             to: user.email,

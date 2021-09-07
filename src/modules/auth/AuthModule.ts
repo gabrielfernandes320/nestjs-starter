@@ -11,6 +11,9 @@ import ValidateUserService from './services/ValidateUserService';
 import { LocalStrategy } from './strategies/LocalStrategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import ChangePasswordService from './services/ChangePasswordService';
+import AppConfigService from '../config/services/AppConfigService';
+import AuthConfigService from '../config/services/AuthConfigService';
+import JwtConfigService from '../config/services/JwtConfigService';
 
 @Module({
     imports: [
@@ -23,12 +26,14 @@ import ChangePasswordService from './services/ChangePasswordService';
             useFactory: async (configService: ConfigService) => ({
                 secret: configService.get('JWT_SECRET'),
                 signOptions: {
-                    expiresIn: configService.get('JWT_EXPIRATION_TIME'),
+                    expiresIn: `${configService.get('JWT_EXPIRATION_TIME')}s`,
                 },
             }),
         }),
     ],
     providers: [
+        AppConfigService,
+        AuthConfigService,
         ConfigService,
         LoginService,
         ValidateUserService,
@@ -36,6 +41,7 @@ import ChangePasswordService from './services/ChangePasswordService';
         LocalStrategy,
         ForgotPasswordService,
         ChangePasswordService,
+        JwtConfigService,
     ],
     controllers: [AuthController],
 })

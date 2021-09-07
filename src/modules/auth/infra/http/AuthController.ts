@@ -45,13 +45,13 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     public async login(@Body() loginDto: LoginDTO, @Res() resp: Response) {
-        const { user, cookie, token } = await this.loginService.execute(
-            loginDto,
-        );
+        const { user, cookie, token, cookieRefreshToken } =
+            await this.loginService.execute(loginDto);
 
-        resp.setHeader('Set-Cookie', cookie);
+        resp.setHeader('Set-Cookie', [cookie, cookieRefreshToken]);
+        // resp.setHeader('Set-Cookie', cookieRefreshToken);
 
-        return resp.send({ user, token });
+        return resp.send({ user });
     }
 
     @ApiResponse({
