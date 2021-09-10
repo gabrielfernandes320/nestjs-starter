@@ -9,7 +9,7 @@ export default class CreateUserService {
         @Inject('UsersRepository') private usersRepository: IUsersRepository,
     ) {}
 
-    public async execute(user: CreateUserDto): Promise<User> {
+    public async execute(user: CreateUserDto): Promise<any> {
         return await this.usersRepository.create(user);
     }
 }
