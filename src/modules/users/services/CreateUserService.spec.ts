@@ -4,8 +4,6 @@ import {
     CreateUserDtoMock,
     mockUsersRepository,
 } from '../mocks/UserMockFactory';
-import { plainToClass } from 'class-transformer';
-import { User } from '../infra/typeorm/entities/UserEntity';
 
 describe('CreateUserService', () => {
     let service: CreateUserService;
@@ -27,12 +25,10 @@ describe('CreateUserService', () => {
 
     describe('createUserService', () => {
         it('should create a user in database and return the user', async () => {
-            expect(await service.execute(mockUserDto)).toEqual(
-                plainToClass(User, {
-                    id: 1,
-                    ...mockUserDto,
-                }),
-            );
+            expect(await service.execute(mockUserDto)).toEqual({
+                id: 1,
+                ...mockUserDto,
+            });
         });
     });
 });

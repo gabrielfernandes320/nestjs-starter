@@ -1,3 +1,4 @@
+import { plainToClass } from 'class-transformer';
 import UpdateUserDTO from '../dtos/UpdateUserDTO';
 import { Inject, Injectable } from '@nestjs/common';
 import { User } from '../infra/typeorm/entities/UserEntity';
@@ -10,6 +11,10 @@ export default class UpdateUserService {
     ) {}
 
     public async execute(id: number, user: UpdateUserDTO): Promise<User> {
-        return await this.usersRepository.update(id, user);
+        if (user.password === '') {
+            user.password = undefined;
+        }
+
+        return await this.usersRepository.update(id, plainToClass(User, user));
     }
 }

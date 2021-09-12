@@ -26,7 +26,7 @@ describe('DeleteUserService', () => {
 
     describe('DeleteUserService', () => {
         it('should delete a user from the database', async () => {
-            expect(await service.execute(mockUser.id)).resolves.not.toThrow();
+            expect(await service.execute(mockUser.id)).not.toThrow();
         });
     });
 });

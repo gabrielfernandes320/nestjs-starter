@@ -1,52 +1,21 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
-import { Repository, ILike } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { User } from '../entities/UserEntity';
-import CreateUserDTO from 'src/modules/users/dtos/CreateUserDTO';
-import UpdateUserDTO from 'src/modules/users/dtos/UpdateUserDTO';
-import { plainToClass } from 'class-transformer';
-import ListUserDTO from 'src/modules/users/dtos/ListUserDTO';
-import UserNotFoundException from '../../../exceptions/UserNotFoundException';
-import EmailAlreadyExistsException from '../../../exceptions/EmailAlreadyExistsException';
+import { BaseRepository } from '../../../../../shared/infra/typeorm/repositories/BaseRepository';
+import ListUserDTO from '../../../dtos/ListUserDTO';
 
 @Injectable()
-export class UsersRepository implements IUsersRepository {
+export class UsersRepository
+    extends BaseRepository(User)
+    implements IUsersRepository
+{
     public constructor(
         @InjectRepository(User)
         private usersRepository: Repository<User>,
-    ) {}
-
-    public async create(user: CreateUserDTO): Promise<User> {
-        const newUser = this.usersRepository.create(plainToClass(User, user));
-
-        try {
-            return await this.usersRepository.save(newUser);
-        } catch (error) {
-            this.handleErrors(error, newUser);
-        }
-    }
-
-    public async update(id: number, userDto: UpdateUserDTO): Promise<User> {
-        const user = await this.usersRepository.findOne(id);
-
-        if (!user) {
-            throw new UserNotFoundException(id);
-        }
-
-        let userToUpdate = plainToClass(User, userDto);
-
-        userToUpdate.id = id;
-
-        if (userToUpdate.password === '') {
-            userToUpdate.password = undefined;
-        }
-
-        const updatedUser = await this.usersRepository.save(userToUpdate);
-
-        if (updatedUser) {
-            return updatedUser;
-        }
+    ) {
+        super();
     }
 
     public async findAll(params: ListUserDTO): Promise<any> {
@@ -67,40 +36,10 @@ export class UsersRepository implements IUsersRepository {
         };
     }
 
-    public async findById(id: number): Promise<User> {
-        const user = await this.usersRepository.findOne(id, {
-            relations: ['roles', 'roles.permissions'],
-        });
-
-        if (user) {
-            return user;
-        }
-
-        throw new UserNotFoundException(id);
-    }
-
-    public async remove(id: number) {
-        const deleted = await this.usersRepository.softDelete(id);
-
-        if (!deleted.affected) {
-            throw new UserNotFoundException(id);
-        }
-    }
-
-    public async findByEmail(email: string): Promise<any> {
+    async findByEmail(email: string): Promise<User> {
         return await this.usersRepository.findOne({
             where: { email },
             relations: ['roles', 'roles.permissions'],
         });
-    }
-
-    private handleErrors(error: any, user: User) {
-        switch (error.code) {
-            case '23505':
-                throw new EmailAlreadyExistsException(user.email);
-
-            default:
-                throw HttpException;
-        }
     }
 }

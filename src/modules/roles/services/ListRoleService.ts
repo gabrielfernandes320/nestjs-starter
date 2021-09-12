@@ -10,7 +10,9 @@ export default class ListRoleService {
         private rolesRepository: IRolesRepository,
     ) {}
 
-    public async execute(listRoleDto: ListRoleDTO): Promise<Role[]> {
-        return await this.rolesRepository.findAll(listRoleDto);
+    public async execute(listRoleDto: ListRoleDTO): Promise<any> {
+        return await this.rolesRepository.findAll(listRoleDto, {
+            relations: ['roles'],
+        });
     }
 }

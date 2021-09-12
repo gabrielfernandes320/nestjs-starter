@@ -10,6 +10,8 @@ export default class ShowRoleService {
     ) {}
 
     public async execute(id: number): Promise<Role> {
-        return await this.rolesRepository.findById(id);
+        return await this.rolesRepository.findById(id, {
+            relations: ['permissions'],
+        });
     }
 }

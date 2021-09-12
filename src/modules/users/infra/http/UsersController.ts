@@ -39,6 +39,7 @@ export class UsersController {
         private updateUserService: UpdateUserService,
     ) {}
 
+    @Permissions(UserPermissions.Create)
     @Post()
     public async create(@Body() createUserDto: CreateUserDTO) {
         return await this.createUserService.execute(createUserDto);

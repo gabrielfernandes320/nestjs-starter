@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
 export default class UpdateUserDTO {
+    @IsNumber()
     @IsNotEmpty()
-    public id: number | string;
-
+    public id: number;
     @IsNotEmpty() public name?: string;
     @IsNotEmpty() public email?: string;
     @IsOptional() public roles?: { id: string }[];
