@@ -10,7 +10,9 @@ export default class ListUserService {
         private usersRepository: IUsersRepository,
     ) {}
 
-    public async execute(listUserDto: ListUserDTO): Promise<User[]> {
-        return await this.usersRepository.findAll(listUserDto);
+    public async execute(listUserDto: ListUserDTO): Promise<any> {
+        return await this.usersRepository.findAll(listUserDto, {
+            relations: ['roles'],
+        });
     }
 }

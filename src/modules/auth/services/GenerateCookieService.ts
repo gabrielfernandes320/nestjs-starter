@@ -18,7 +18,9 @@ export default class GenerateCookieService {
     ) {}
 
     public async execute(type: CookieType, userId: number): Promise<string> {
-        const user = await this.usersRepository.findById(userId);
+        const user = await this.usersRepository.findById(userId, {
+            relations: ['roles', 'roles.permissions'],
+        });
 
         const userData = {
             id: user.id,

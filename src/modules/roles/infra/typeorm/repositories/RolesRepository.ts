@@ -8,32 +8,18 @@ import CreateRoleDTO from 'src/modules/roles/dtos/CreateRoleDTO';
 import { plainToClass } from 'class-transformer';
 import UpdateRoleDTO from 'src/modules/roles/dtos/UpdateRoleDTO';
 import RoleNotFoundException from 'src/modules/roles/exceptions/RoleNotFoundException';
+import { BaseRepository } from '../../../../../shared/infra/typeorm/repositories/BaseRepository';
 
 @Injectable()
-export class RolesRepository implements IRolesRepository {
+export class RolesRepository
+    extends BaseRepository(Role)
+    implements IRolesRepository
+{
     public constructor(
         @InjectRepository(Role)
         private rolesRepository: Repository<Role>,
-    ) {}
-
-    public async create(role: CreateRoleDTO): Promise<Role> {
-        const newRole = this.rolesRepository.create(plainToClass(Role, role));
-
-        return await this.rolesRepository.save(newRole);
-    }
-
-    public async update(id: number, role: UpdateRoleDTO): Promise<Role> {
-        let roleToUpdate = plainToClass(Role, role);
-
-        roleToUpdate.id = id;
-
-        const updatedRole = await this.rolesRepository.save(roleToUpdate);
-
-        if (updatedRole) {
-            return updatedRole;
-        }
-
-        throw new RoleNotFoundException(id);
+    ) {
+        super();
     }
 
     public async findAll(params: ListRolesDTO): Promise<any> {
@@ -52,17 +38,5 @@ export class RolesRepository implements IRolesRepository {
             total: total,
             pages: Math.round(total / perPage),
         };
-    }
-
-    public findById(id: number): Promise<Role> {
-        return this.rolesRepository.findOne(id, { relations: ['permissions'] });
-    }
-
-    public async remove(id: number) {
-        const deleted = await this.rolesRepository.softDelete(id);
-
-        if (!deleted.affected) {
-            throw new RoleNotFoundException(id);
-        }
     }
 }

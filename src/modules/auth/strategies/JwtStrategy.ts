@@ -24,6 +24,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     public async validate(payload: any) {
-        return this.usersRepository.findById(payload.id);
+        return this.usersRepository.findById(payload.id, {
+            relations: ['roles', 'roles.permissions'],
+        });
     }
 }

@@ -9,6 +9,7 @@ import ChangePasswordDTO from '../dtos/ChangePasswordDTO';
 import InvalidTokenException from '../exceptions/InvalidTokenException';
 import CreateUserDTO from '../../users/dtos/CreateUserDTO';
 import UpdateUserDTO from '../../users/dtos/UpdateUserDTO';
+import { User } from '../../users/infra/typeorm/entities/UserEntity';
 
 @Injectable()
 export default class LoginService {
@@ -33,7 +34,7 @@ export default class LoginService {
 
         return await this.usersRepository.update(
             user.id,
-            plainToClass(UpdateUserDTO, user),
+            plainToClass(User, user),
         );
     }
 }
