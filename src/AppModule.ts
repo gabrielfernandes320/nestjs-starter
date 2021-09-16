@@ -10,11 +10,10 @@ import { DatabaseModule } from './modules/database/DatabaseModule';
     imports: [
         ConfigModule.forRoot({
             validationSchema: Joi.object({
-                POSTGRES_HOST: Joi.string().required(),
-                POSTGRES_PORT: Joi.number().required(),
-                POSTGRES_USER: Joi.string().required(),
-                POSTGRES_PASSWORD: Joi.string().required(),
-                POSTGRES_DB: Joi.string().required(),
+                DB_HOST: Joi.string().required(),
+                DB_PORT: Joi.number().required(),
+                DB_USER: Joi.string().required(),
+                DB_NAME: Joi.string().required(),
                 PORT: Joi.number(),
             }),
         }),

@@ -10,6 +10,7 @@ import InvalidTokenException from '../exceptions/InvalidTokenException';
 import CreateUserDTO from '../../users/dtos/CreateUserDTO';
 import UpdateUserDTO from '../../users/dtos/UpdateUserDTO';
 import { User } from '../../users/infra/typeorm/entities/UserEntity';
+import UserNotFoundException from '../../users/exceptions/UserNotFoundException';
 
 @Injectable()
 export default class LoginService {
@@ -29,6 +30,10 @@ export default class LoginService {
         }
 
         const user = await this.usersRepository.findByEmail(tokenPayload.email);
+
+        if (!user) {
+            throw new UserNotFoundException(tokenPayload.id);
+        }
 
         user.password = changePassword.password;
 

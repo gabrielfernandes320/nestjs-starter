@@ -41,3 +41,4 @@ lerna-debug.log*
 boot.sh
 build.sh
 
+package-lock.json

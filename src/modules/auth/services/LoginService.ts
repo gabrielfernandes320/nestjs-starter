@@ -1,27 +1,23 @@
-import { Inject, Injectable } from '@nestjs/common';
-import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
+import { Injectable } from '@nestjs/common';
 import LoginDTO from '../dtos/LoginDTO';
-import { JwtService } from '@nestjs/jwt';
 import ValidateUserService from './ValidateUserService';
-import AuthConfigService from '../../config/services/AuthConfigService';
-import JwtConfigService from '../../config/services/JwtConfigService';
 import GenerateCookieService from './GenerateCookieService';
 import { CookieType } from '../enums/CookieTypeEnum';
+import ShowUserByEmailService from '../../users/services/ShowUserByEmailService';
+import { User } from '../../users/infra/typeorm/entities/UserEntity';
 
 @Injectable()
 export default class LoginService {
     public constructor(
-        @Inject('UsersRepository')
-        private usersRepository: IUsersRepository,
         private validateUserService: ValidateUserService,
-        private jwtService: JwtService,
-        private authConfigService: AuthConfigService,
-        private jwtConfigService: JwtConfigService,
+        private showUserByEmailService: ShowUserByEmailService,
         private generateCookieService: GenerateCookieService,
     ) {}
 
-    public async execute(loginDto: LoginDTO): Promise<any> {
-        const user = await this.usersRepository.findByEmail(loginDto.login);
+    public async execute(
+        loginDto: LoginDTO,
+    ): Promise<{ user: User; cookie: string; cookieRefreshToken: string }> {
+        const user = await this.showUserByEmailService.execute(loginDto.login);
 
         if (user) {
             if (await this.validateUserService.execute(loginDto)) {

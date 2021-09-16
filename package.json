@@ -19,7 +19,12 @@
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
         "test:e2e:watch": "jest --config ./test/jest-e2e.json --watch",
-        "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js -f src/cli/loader.ts"
+        "seed:config": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-seeding/dist/cli.js config -r src/modules/database/cli -n loader.ts",
+        "seed:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-seeding/dist/cli.js seed -r src/modules/database/cli -n loader.ts",
+        "migration:run": "npm run typeorm -- migration:run",
+        "migration:create": "npm run typeorm -- migration:create -n",
+        "migration:revert": "npm run typeorm -- migration:revert",
+        "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js -f src/modules/database/cli/loader.ts"
     },
     "dependencies": {
         "@hapi/joi": "^17.1.1",
@@ -35,6 +40,7 @@
         "@types/bcrypt": "^5.0.0",
         "@types/faker": "^5.5.8",
         "@types/hapi__joi": "^17.1.7",
+        "@types/passport": "^1.0.7",
         "@types/passport-local": "^1.0.34",
         "@types/validator": "^13.6.3",
         "bcrypt": "^5.0.1",
@@ -45,7 +51,9 @@
         "factory.ts": "^0.5.2",
         "faker": "^5.5.3",
         "handlebars": "^4.7.7",
+        "mysql": "^2.18.1",
         "nodemailer": "^6.6.3",
+        "passport": "^0.4.1",
         "passport-jwt": "^4.0.0",
         "passport-local": "^1.0.0",
         "pg": "^8.6.0",
@@ -53,15 +61,18 @@
         "rimraf": "^3.0.2",
         "rxjs": "^7.2.0",
         "swagger-ui-express": "^4.1.6",
-        "typeorm": "^0.2.37"
+        "typeorm": "^0.2.37",
+        "typeorm-seeding": "^1.5.0"
     },
     "devDependencies": {
         "@nestjs/cli": "^8.0.0",
         "@nestjs/schematics": "^8.0.0",
         "@nestjs/testing": "^8.0.0",
+        "@types/bcryptjs": "^2.4.2",
         "@types/cookie-parser": "^1.4.2",
         "@types/express": "^4.17.13",
         "@types/jest": "^26.0.24",
+        "@types/jsonwebtoken": "^8.5.5",
         "@types/node": "^16.0.0",
         "@types/nodemailer": "^6.4.4",
         "@types/passport-jwt": "^3.0.6",

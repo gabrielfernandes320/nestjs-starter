@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersController } from './infra/http/UsersController';
 import { User } from './infra/typeorm/entities/UserEntity';
 import providers from './providers';
-import ValidateUserEmailService from './services/ValidateUserEmailService';
+import ShowUserByEmailService from './services/ShowUserByEmailService';
 import UpdateUserService from './services/UpdateUserService';
 import ShowUserService from './services/ShowUserService';
 import CreateUserService from './services/CreateUserService';
@@ -19,11 +19,11 @@ import DeleteUserService from './services/DeleteUserService';
             UpdateUserService,
             ListUserService,
             DeleteUserService,
-            ValidateUserEmailService,
+            ShowUserByEmailService,
         ],
         ...providers,
     ],
     controllers: [UsersController],
-    exports: providers,
+    exports: [...[ShowUserByEmailService], ...providers],
 })
 export class UsersModule {}

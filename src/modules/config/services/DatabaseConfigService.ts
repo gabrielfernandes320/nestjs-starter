@@ -8,15 +8,16 @@ export default class DatabaseConfigService {
     public constructor(private configService: ConfigService) {
         this.config = {
             type: 'postgres',
-            host: this.configService.get('POSTGRES_HOST'),
-            port: this.configService.get('POSTGRES_PORT'),
-            username: this.configService.get('POSTGRES_USER'),
-            password: this.configService.get('POSTGRES_PASSWORD'),
-            database: this.configService.get('POSTGRES_DB'),
-            entities: ['dist/**/*Entity.js'],
+            host: this.configService.get('DB_HOST'),
+            port: this.configService.get('DB_PORT'),
+            username: this.configService.get('DB_USER'),
+            password: this.configService.get('DB_PASSWORD'),
+            database: this.configService.get('DB_NAME'),
+            entities: ['./src/**/*Entity.ts'],
+            seeds: ['./src/modules/database/seeds/**/*{.ts,.js}'],
             synchronize: false,
             cli: {
-                migrationsDir: 'src/migrations',
+                migrationsDir: './src/modules/database/migrations',
             },
         };
     }

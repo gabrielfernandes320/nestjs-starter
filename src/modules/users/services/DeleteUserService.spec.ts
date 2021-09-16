@@ -7,7 +7,11 @@ describe('DeleteUserService', () => {
     const mockUser = UserMock.build();
 
     const mockUsersRepository = {
-        remove: jest.fn(async (id: number): Promise<void> => Promise.resolve()),
+        remove: jest.fn(async (id: number): Promise<void> => {
+            id = id;
+
+            return;
+        }),
     };
 
     beforeEach(async () => {
@@ -26,7 +30,9 @@ describe('DeleteUserService', () => {
 
     describe('DeleteUserService', () => {
         it('should delete a user from the database', async () => {
-            expect(await service.execute(mockUser.id)).not.toThrow();
+            expect(await service.execute(mockUser.id)).toEqual(undefined);
+
+            expect(mockUsersRepository.remove).toHaveBeenCalled();
         });
     });
 });

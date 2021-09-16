@@ -72,6 +72,9 @@ export const mockUsersRepository = {
         mockUsersList.find((item) => item.id === id),
     ),
     findByEmail: jest.fn((email: string) =>
-        mockUsersList.find((item) => item.email === email),
+        plainToClass(
+            User,
+            mockUsersList.find((item) => item.email === email),
+        ),
     ),
 };

@@ -44,6 +44,7 @@ export function BaseRepository<T>(
 
             throw new EntityNotFoundException(id);
         }
+
         public async remove(id: number, options?: Options<T>): Promise<void> {
             try {
                 const deleted = await this.repository.softDelete(id);
@@ -61,11 +62,11 @@ export function BaseRepository<T>(
                 );
             }
         }
+
         public async create(entity: T, options?: Options<T>): Promise<T> {
             try {
                 return await this.repository.save(entity);
             } catch (error) {
-                console.log(error);
                 throw new HttpException(
                     {
                         message: 'Error at inserting entity in database',
@@ -75,6 +76,7 @@ export function BaseRepository<T>(
                 );
             }
         }
+
         public async update(
             id: number,
             entity: T,
