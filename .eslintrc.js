@@ -38,12 +38,7 @@ module.exports = {
         indent: ['error', 4, { SwitchCase: 1 }],
         '@typescript-eslint/member-ordering': 'error',
         '@typescript-eslint/no-empty-function': 'off',
-        '@typescript-eslint/no-empty-interface': [
-            'error',
-            {
-                allowSingleExtends: true,
-            },
-        ],
+        '@typescript-eslint/no-empty-interface': 'error',
         '@typescript-eslint/no-misused-new': 'error',
         '@typescript-eslint/no-non-null-assertion': 'error',
         '@typescript-eslint/no-unused-expressions': 'error',

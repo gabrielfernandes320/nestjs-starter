@@ -36,7 +36,7 @@ export class UsersRepository
         };
     }
 
-    async findByEmail(email: string): Promise<User> {
+    public async findByEmail(email: string): Promise<User> {
         return await this.usersRepository.findOne({
             where: { email },
             relations: ['roles', 'roles.permissions'],
