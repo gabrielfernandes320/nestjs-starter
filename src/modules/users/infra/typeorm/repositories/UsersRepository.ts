@@ -1,10 +1,10 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
 import { ILike, Repository } from 'typeorm';
-import { User } from '../entities/UserEntity';
 import { BaseRepository } from '../../../../../shared/infra/typeorm/repositories/BaseRepository';
 import ListUserDTO from '../../../dtos/ListUserDTO';
+import { User } from '../entities/UserEntity';
 
 @Injectable()
 export class UsersRepository

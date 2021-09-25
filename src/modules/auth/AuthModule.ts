@@ -1,21 +1,21 @@
-import { MailModule } from './../mail/MailModule';
-import { JwtStrategy } from './strategies/JwtStrategy';
 import { Module } from '@nestjs/common';
-import { AuthController } from './infra/http/AuthController';
-import LoginService from './services/LoginService';
-import ForgotPasswordService from './services/ForgotPasswordService';
-import { UsersModule } from '../users/UsersModule';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
-import ValidateUserService from './services/ValidateUserService';
-import { LocalStrategy } from './strategies/LocalStrategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import ChangePasswordService from './services/ChangePasswordService';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import AppConfigService from '../config/services/AppConfigService';
 import AuthConfigService from '../config/services/AuthConfigService';
 import JwtConfigService from '../config/services/JwtConfigService';
-import { JwtRefreshTokenStrategy } from './strategies/JwtRefreshTokenStrategy';
+import { UsersModule } from '../users/UsersModule';
+import { MailModule } from './../mail/MailModule';
+import { AuthController } from './infra/http/AuthController';
+import ChangePasswordService from './services/ChangePasswordService';
+import ForgotPasswordService from './services/ForgotPasswordService';
 import GenerateCookieService from './services/GenerateCookieService';
+import LoginService from './services/LoginService';
+import ValidateUserService from './services/ValidateUserService';
+import { JwtRefreshTokenStrategy } from './strategies/JwtRefreshTokenStrategy';
+import { JwtStrategy } from './strategies/JwtStrategy';
+import { LocalStrategy } from './strategies/LocalStrategy';
 
 @Module({
     imports: [

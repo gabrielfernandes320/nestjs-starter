@@ -13,7 +13,8 @@ import { BaseRepository } from '../../../../../shared/infra/typeorm/repositories
 @Injectable()
 export class RolesRepository
     extends BaseRepository(Role)
-    implements IRolesRepository {
+    implements IRolesRepository
+{
     public constructor(
         @InjectRepository(Role)
         private rolesRepository: Repository<Role>,

@@ -5,8 +5,10 @@ import {
 } from '@nestjs/config';
 import AuthConfigService from './services/AuthConfigService';
 import DatabaseConfigService from './services/DatabaseConfigService';
-import AppConfigService from './services/JwtConfigService';
-import JwtConfigService from './services/JwtConfigService';
+import {
+    default as AppConfigService,
+    default as JwtConfigService,
+} from './services/JwtConfigService';
 import MailConfigService from './services/MailConfigService';
 
 @Module({

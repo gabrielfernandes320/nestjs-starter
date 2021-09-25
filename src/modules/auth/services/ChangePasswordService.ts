@@ -1,16 +1,13 @@
-import { plainToClass } from 'class-transformer';
-import { ConsoleLogger, Inject, Injectable } from '@nestjs/common';
-import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
-import LoginDTO from '../dtos/LoginDTO';
-import { JwtService } from '@nestjs/jwt';
-import ValidateUserService from './ValidateUserService';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { plainToClass } from 'class-transformer';
+import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
+import UserNotFoundException from '../../users/exceptions/UserNotFoundException';
+import { User } from '../../users/infra/typeorm/entities/UserEntity';
 import ChangePasswordDTO from '../dtos/ChangePasswordDTO';
 import InvalidTokenException from '../exceptions/InvalidTokenException';
-import CreateUserDTO from '../../users/dtos/CreateUserDTO';
-import UpdateUserDTO from '../../users/dtos/UpdateUserDTO';
-import { User } from '../../users/infra/typeorm/entities/UserEntity';
-import UserNotFoundException from '../../users/exceptions/UserNotFoundException';
+import ValidateUserService from './ValidateUserService';
 
 @Injectable()
 export default class LoginService {

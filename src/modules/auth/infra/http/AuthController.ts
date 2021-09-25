@@ -11,20 +11,20 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
-import LoginDTO from '../../dtos/LoginDTO';
-import LoginService from '../../services/LoginService';
-import ForgotPasswordService from '../../services/ForgotPasswordService';
-import { Response, Request } from 'express';
-import { LocalAuthGuard } from '../../guards/LocalAuthGuard';
-import JwtAuthenticationGuard from '../../guards/JwtAuthenticationGuard';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
-import ForgotPasswordDTO from '../../dtos/ForgotPasswordDTO';
-import ChangePasswordDTO from '../../dtos/ChangePasswordDTO';
-import ChangePasswordService from '../../services/ChangePasswordService';
-import JwtRefreshTokenGuard from '../../guards/JwtRefreshTokenGuard';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Request, Response } from 'express';
 import { User } from '../../../users/infra/typeorm/entities/UserEntity';
-import GenerateCookieService from '../../services/GenerateCookieService';
+import ChangePasswordDTO from '../../dtos/ChangePasswordDTO';
+import ForgotPasswordDTO from '../../dtos/ForgotPasswordDTO';
+import LoginDTO from '../../dtos/LoginDTO';
 import { CookieType } from '../../enums/CookieTypeEnum';
+import JwtAuthenticationGuard from '../../guards/JwtAuthenticationGuard';
+import JwtRefreshTokenGuard from '../../guards/JwtRefreshTokenGuard';
+import { LocalAuthGuard } from '../../guards/LocalAuthGuard';
+import ChangePasswordService from '../../services/ChangePasswordService';
+import ForgotPasswordService from '../../services/ForgotPasswordService';
+import GenerateCookieService from '../../services/GenerateCookieService';
+import LoginService from '../../services/LoginService';
 
 @ApiTags('Auth')
 @Controller({

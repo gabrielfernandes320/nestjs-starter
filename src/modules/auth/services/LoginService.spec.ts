@@ -1,15 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-    UserMock,
-    mockUsersRepository,
-    mockUsersList,
-} from '../../users/mocks/UserMockFactory';
-import LoginDTO from '../dtos/LoginDTO';
 import hashComparePassword from '../../../shared/utils/hashComparePassword';
-import LoginService from './LoginService';
+import {
+    mockUsersList,
+    mockUsersRepository,
+} from '../../users/mocks/UserMockFactory';
 import ShowUserByEmailService from '../../users/services/ShowUserByEmailService';
+import LoginDTO from '../dtos/LoginDTO';
 import { CookieType } from '../enums/CookieTypeEnum';
 import GenerateCookieService from './GenerateCookieService';
+import LoginService from './LoginService';
 import ValidateUserService from './ValidateUserService';
 
 describe('LoginService', () => {

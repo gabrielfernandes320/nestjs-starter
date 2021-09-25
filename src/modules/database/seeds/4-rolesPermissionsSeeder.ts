@@ -1,5 +1,5 @@
-import { Factory, Seeder } from 'typeorm-seeding';
 import { Connection } from 'typeorm';
+import { Factory, Seeder } from 'typeorm-seeding';
 import { Role } from '../../roles/infra/typeorm/entities/RoleEntity';
 
 export default class Roles implements Seeder {

@@ -1,10 +1,8 @@
-import { UsersRepository } from './../../users/infra/typeorm/repositories/UsersRepository';
-import { Factory, Seeder } from 'typeorm-seeding';
-import { Connection, Repository } from 'typeorm';
 import hashPassword from 'src/shared/utils/hashPassword';
-import { User } from '../../users/infra/typeorm/entities/UserEntity';
-import { date } from '@hapi/joi';
+import { Connection, Repository } from 'typeorm';
+import { Factory, Seeder } from 'typeorm-seeding';
 import { Role } from '../../roles/infra/typeorm/entities/RoleEntity';
+import { User } from '../../users/infra/typeorm/entities/UserEntity';
 
 export default class Users implements Seeder {
     public constructor(

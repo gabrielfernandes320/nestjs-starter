@@ -46,7 +46,9 @@ describe('UsersController', () => {
     const mockShowUserService = {
         execute: jest.fn(async (id: number) => {
             const user = mockUsersList[id];
+
             delete user.password;
+
             return user;
         }),
     };

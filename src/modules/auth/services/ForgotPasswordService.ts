@@ -1,14 +1,14 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
-import SendMailService from '../../mail/services/SendMailService';
 import { ISendMailOptions } from '@nestjs-modules/mailer';
-import ForgotPasswordDTO from '../dtos/ForgotPasswordDTO';
-import { User } from '../../users/infra/typeorm/entities/UserEntity';
-import InvalidEmailException from '../exceptions/InvalidEmailException';
-import { Template } from '../../mail/enums/TemplatesEnum';
+import { Inject, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
 import AppConfigService from '../../config/services/AppConfigService';
+import { Template } from '../../mail/enums/TemplatesEnum';
+import SendMailService from '../../mail/services/SendMailService';
+import { User } from '../../users/infra/typeorm/entities/UserEntity';
+import ForgotPasswordDTO from '../dtos/ForgotPasswordDTO';
+import InvalidEmailException from '../exceptions/InvalidEmailException';
 
 @Injectable()
 export default class FogotPasswordService {

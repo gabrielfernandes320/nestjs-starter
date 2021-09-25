@@ -12,8 +12,15 @@ export default function formatMask(
     let maskLength = text.length;
 
     for (let i = 0; i <= maskLength; i++) {
-        aux = ((mask.charAt(i) === '-') || (mask.charAt(i) === '.') || (mask.charAt(i) === '/'));
-        aux = aux || ((mask.charAt(i) === '(') || (mask.charAt(i) === ')') || (mask.charAt(i) === ' '));
+        aux =
+            mask.charAt(i) === '-' ||
+            mask.charAt(i) === '.' ||
+            mask.charAt(i) === '/';
+        aux =
+            aux ||
+            mask.charAt(i) === '(' ||
+            mask.charAt(i) === ')' ||
+            mask.charAt(i) === ' ';
 
         if (aux) {
             newValue += mask.charAt(i);

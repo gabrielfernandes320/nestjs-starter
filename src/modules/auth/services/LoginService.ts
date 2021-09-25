@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import LoginDTO from '../dtos/LoginDTO';
-import ValidateUserService from './ValidateUserService';
-import GenerateCookieService from './GenerateCookieService';
-import { CookieType } from '../enums/CookieTypeEnum';
-import ShowUserByEmailService from '../../users/services/ShowUserByEmailService';
 import { User } from '../../users/infra/typeorm/entities/UserEntity';
+import ShowUserByEmailService from '../../users/services/ShowUserByEmailService';
+import LoginDTO from '../dtos/LoginDTO';
+import { CookieType } from '../enums/CookieTypeEnum';
+import GenerateCookieService from './GenerateCookieService';
+import ValidateUserService from './ValidateUserService';
 
 @Injectable()
 export default class LoginService {

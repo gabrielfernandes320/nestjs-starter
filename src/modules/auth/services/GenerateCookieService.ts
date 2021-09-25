@@ -1,8 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
-import LoginDTO from '../dtos/LoginDTO';
 import { JwtService } from '@nestjs/jwt';
-import ValidateUserService from './ValidateUserService';
+import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
 import AuthConfigService from '../../config/services/AuthConfigService';
 import JwtConfigService from '../../config/services/JwtConfigService';
 import { CookieType } from '../enums/CookieTypeEnum';
